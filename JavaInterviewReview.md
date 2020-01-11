@@ -1,0 +1,23 @@
+ * JAVA SPECIFIC CODE
+    - How to get substrings
+    - Access Modifiers (see sheet on https://www.geeksforgeeks.org/access-modifiers-java/)
+    - StringBuilder & StringBuffer
+    - (Traditional) Collections & Implemented Classes
+            - Sets
+            - Lists
+            - Heaps
+            - ArrayList
+            - Vectors
+            - Vectors vs ArrayList
+            - HashMap
+            - HashTable 
+            - HashTable vs HashMap
+            -  
+    - Concurrent Collections
+    - Copy sub-array: Arrays.copyOfRange(Object[] src, int from, int to)
+    - Max/Min Size
+    - Lambda Expressions
+    - Map
+    - Filter
+    - Reduce
+    - Iterator
