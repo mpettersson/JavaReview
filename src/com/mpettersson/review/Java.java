@@ -1,6 +1,7 @@
 package com.mpettersson.review;
 
 
+
 import javax.swing.*;
 import java.io.*;
 import java.nio.file.*;
@@ -132,6 +133,77 @@ public class Java {
         // BOOLEAN - No defined size
         boolean myBoolean = true;
 
+        // Display common numeric types.
+        System.out.println(Byte.TYPE);
+        System.out.println(Byte.SIZE);
+        System.out.println(Byte.MIN_VALUE);
+        System.out.println(Byte.MAX_VALUE);
+
+        System.out.println(Short.TYPE);
+        System.out.println(Short.SIZE);
+        System.out.println(Short.MIN_VALUE);
+        System.out.println(Short.MAX_VALUE);
+
+        System.out.println(Character.TYPE);
+        System.out.println(Character.SIZE);
+        System.out.println((int) Character.MIN_VALUE);
+        System.out.println((int) Character.MAX_VALUE);
+
+        System.out.println(Integer.TYPE);
+        System.out.println(Integer.SIZE);
+        System.out.println(Integer.MIN_VALUE);
+        System.out.println(Integer.MAX_VALUE);
+
+        System.out.println(Float.TYPE);
+        System.out.println(Float.SIZE);
+        System.out.println(Float.MIN_VALUE);
+        System.out.println(Float.MAX_VALUE);
+
+        System.out.println(Double.TYPE);
+        System.out.println(Double.SIZE);
+        System.out.println(Double.MIN_VALUE);
+        System.out.println(Double.MAX_VALUE);
+
+        System.out.println(Long.TYPE);
+        System.out.println(Long.SIZE);
+        System.out.println(Long.MIN_VALUE);
+        System.out.println(Long.MAX_VALUE);
+
+        // Common Math Functions
+        int x = 10, y = 100;
+        double d = 1.0 / 3.0;
+        System.out.println("Math.max(" + x + ", " + y + "): " + Math.max(x, y));
+        System.out.println("Math.min(" + x + ", " + y + "): " + Math.min(x, y));
+        System.out.println("Math.pow(" + x + ", " + y + "): " + Math.pow(x, y));
+        System.out.println("Math.floorDiv(" + x + ", " + y + "): " + Math.floorDiv(x, y));
+        System.out.println("Math.floorMod(" + x + ", " + y + "): " + Math.floorMod(x, y));
+        System.out.println("Math.sqrt(" + x + "): " + Math.sqrt(x));
+        System.out.println("Math.log(" + x + "): " + Math.log(x));
+        System.out.println("Math.floor(" + d + "): " + Math.floor(d));
+        System.out.println("Math.ceil(" + d + "): " + Math.ceil(d));
+        System.out.println("Math.abs(" + x + "): " + Math.abs(x));
+        System.out.println("Math.random():" + Math.random());  // Returns double >= 0.0 and < 1.0
+
+        // How to get random values:
+        System.out.println("Math.random():" + Math.random());  // Returns double >= 0.0 and < 1.0
+
+        int bound = 10;
+        int seed = 100;
+        byte[] bytes = new byte[10];
+        Random random = new Random();
+
+        random.nextInt();  // Returns int >= Integer.MIN_VALUE and <= Integer.MAX_VALUE
+        random.nextInt(bound);  // Returns int >=0 < bound, ONLY int can have bound.
+        random.nextDouble();  // Returns double >= 0.0 and < 1.0
+        random.nextBytes(bytes);  // Puts random bytes into each index of supplied array.
+        random.nextBoolean();
+        random.setSeed(seed);
+        System.out.println("random.nextInt(): " + random.nextInt());
+        System.out.println("random.nextInt(" + bound + "): " + random.nextInt(bound));
+        System.out.println("random.nextDouble(): " + random.nextDouble());
+        System.out.println("random.nextBytes(bytes): " + Arrays.toString(bytes));
+        System.out.println("random.nextBoolean(): " + random.nextBoolean());
+        System.out.println("random.setSeed(" + seed + ")");
 
 
         // COMPARETO
@@ -256,7 +328,6 @@ public class Java {
 
         // We can also easily print an octal/hexadecimal value of an integer
         System.out.println(String.format("Octal: %o, Hex: %x", 10, 10));
-
 
         String replaceString = "We really don't like the letter e here";
 
@@ -500,6 +571,76 @@ public class Java {
         System.out.println(Arrays.toString(a3));
 
 
+        ////////////////////////////
+        // COLLECTION (INTERFACE) //
+        ////////////////////////////
+
+        // A collection represents a group of objects, known as its elements. The Collection interface is the root
+        // interface in the collection hierarchy, that is, List Set and Queue interfaces extend the Collection interface.
+        // Although the Map interface does not extend/implement the Collection interface (because Map hash key value
+        // paris), it is considered part of the Collections Framework.
+        //
+        // The Collection interface is in the java.util package, some of it's more important methods include size(),
+        // isEmpty(), contains(),  iterator(), toArray(), add(E e) , remove(), clear(), equals(), and hashCode().
+        //
+        // The four major data structure types in the Collections Framework are List, Set, Queue, and Map.
+        //
+        // LIST
+        // Lists are ordered collections (sequences) of items that are accessed via an integer index, and typically
+        // allow duplicate values.  The following are implemented List classes:
+        //      Vector - Synchronized, growable array of objects accessed via an int index.
+        //      Stack - Synchronized, Last-In-First-Out (LIFO) stack of objects (extends Vector).
+        //      ArrayList - NOT synchronized, resizeable array implementation of List, allows nulls.
+        //      LinkedList - NOT synchronized, doubly-linked list implementation (extends AbstractSequentialList).
+        //
+        // SET
+        // Sets are collections that do not allow duplicate elements, and model the mathematical set abstraction.  The
+        // following are implemented Set classes:
+        //      HashSet - NOT synchronized, Set implementation by HashMap, allows one null, NOT ordered.
+        //      LinkedHashSet - NOT synchronized, Hashtable & LinkedList imp of Set, ordered via doubly-linked list.
+        //      TreeSet - Not synchronized, NavigableSet implementation based on HashMap, allows one null, NOT ordered.
+        //
+        // QUEUE
+        // Queues are "a collection designed for holding elements prior to processing".  Queues typically, but do not
+        // necessarily, order elements in a FIFO (first-in-first-out) manner.  Among the exceptions are priority queues,
+        // which order elements according to a supplied comparator, or the elements' natural ordering, and LIFO queues
+        // (or stacks) which order the elements LIFO (last-in-first-out).  The implemented Queue classes are:
+        //      ArrayDequeue - NOT synchronized, resizable-array imp of the Deque interface, nulls NOT allowed.
+        //      PriorityQueue - NOT synchronized, unbounded priority queue (First-In-First-Out) based on a priority heap.
+        //      NOTE: LinkedList implements Dequeue.
+        //
+        // MAP
+        // A Map is an object that maps keys to values. A map cannot contain duplicate keys; each key can map to at most
+        // one value.  The Map interface is interesting in that it does not implement or extend any other class.
+        // Implemented Map classes include:
+        //      HashMap - NOT synchronized, Hashtable based imp of Map, allows null vals and 1 null key, no order guarantees.
+        //      Hashtable - Synchronized, Hashtable imp of Map, null NOT allowed, NOT ordered.
+        //      TreeMap - NOT synchronized, Red-Black tree based NavigableMap imp; (ordered) SORTED by keys.
+        //      LinkedHashMap - NOT synchronized, HashTable & LinkedList imp of the Map interface, ordered via dlinkedlist.
+        //      IdentityHashMap - NOT synchronized, HashTable based Map imp using reference-equality when comparing keys.
+        //
+        // To iterate over a collection, without modifying it, use the for-each loop (for(Element e: collection)...).
+        // To iterate over and access collection elements use; Enumeration, Iterator, and ListIterator.
+        //
+        // ENUMERATION
+        // The Enumeration Interface was the first iterator, present in JDK 1.0, and only works on legacy collections
+        // (Vector and Hashtable).  Only three methods were provided; hasMoreElements(), nextElement(), and asIterator().
+        // It can only iterate in a forward direction (and can't Remove/Add/Set elements).
+        //
+        // ITERATOR
+        // Added in Java 1.2, "Iterator takes the place of Enumeration in the Java Collections Framework". Iterators can
+        // read and remove elements on ALL Collection objects.  Iterator methods include: hasNext(), next(), remove, and
+        // forEachRemaining().
+        //
+        // LISTITERATOR
+        // ListIterator extends Iterator, is ONLY available to lists (only AbstractList implements it), allows for
+        // Bi-Directional movement, and can add/remove/set elements.  ListIterator has hasNext(), next(), hasPrevious(),
+        // previous(), nextIndex(), previousIndex(), remove(), set(E e) and add(E e) methods.
+        //
+        // NOTE: ListIterator has no "current" element, that it always lies between the element that would be returned
+        // by a previous() call and the element that would be returned by a next() call, furthermore, the remove() and
+        // set(E e) methods act on the last element returned by next()/previous().
+
 
         ///////////////
         // ARRAYLIST //
@@ -516,8 +657,8 @@ public class Java {
 
 
         // Iterate with an Enhaned For
-        for(Integer x: arrayList){
-            System.out.print(x);
+        for(Integer i: arrayList){
+            System.out.print(i);
         }
 
         // Iterate Using an ITERATOR
@@ -605,8 +746,8 @@ public class Java {
         // How to convert a Linked List to an Array:
         Object[] llObj = iL1.toArray();
 
-        for(Integer x: iL1){
-            System.out.print(x);
+        for(Integer i: iL1){
+            System.out.print(i);
         }
         System.out.println();
 
@@ -880,7 +1021,7 @@ public class Java {
         System.out.print(s + ": ");
         if(d1.isDirectory()){
             File[] files = d1.listFiles();
-            for(File x : files) System.out.print(x.getName() + " ");
+            for(File f : files) System.out.print(f.getName() + " ");
         }
         System.out.println();
 
@@ -948,10 +1089,15 @@ public class Java {
         }
 
 
+        SerializationReview.examples();
         LambdaReview.examples();
         StreamReview.examples();
         ConcurrentReview.examples();
+        GCReview.examples();
 
+        // How to exit; this terminates the currently running Java Virtual Machine. The argument serves as a status
+        // code; by convention, a nonzero status code indicates abnormal termination.
+        System.exit(0);
 
     } // END OF MAIN
 }
@@ -1121,7 +1267,7 @@ class Circle extends Shape{
 // Added to Java5
 
 // class
-class ClassWithGenerics<T>{
+class ClassWithGenerics<T extends Comparable>{
 
     T val;
 
@@ -1194,6 +1340,183 @@ class AnagramComparator implements Comparator<String>{
         });
     }
 }
+
+
+///////////////////////////////////////////////////
+// SERIALIZATION (SERIALIZABLE & EXTERNALIZABLE) //
+///////////////////////////////////////////////////
+
+// Serialization, in Java, is the process which is used to serialize object in java by storing object’s state into a
+// file and recreating object's state from that file (the reverse process is called deserialization).  The file (byte
+// stream) created is platform independent, therefore, an object serialized on one platform can be deserialized on a
+// different platform.  This is useful for network communication and to save objects states.
+//
+// NOTE: Any object being serialized (from an serialized object) MUST ALSO be serialized or a
+// java.io.NotSerializableException will be thrown.
+//
+// The Java Serialization API provides the Serializable interface and the Externalizable interface as object
+// serialization mechanisms.
+//
+// SERIALIZABLE INTERFACE
+// Serializable is a MARKER INTERFACE, or, an interface that has no methods or constants inside it, and is intended to
+// provide information to the compiler and JVM.  Therefore, to make a class Serializable, add "implements
+// java.io.Serializable", then the JVM will provide default serialization.  The default serialization is serialization
+// of all non-static and non-transient data members.  Variables defined with transient keyword are initialized with the
+// default value (NOT current value) during deserialization. Variables defined with static keyword are loaded with the
+// current value of the variable during deserialization.
+//
+// EXTERNALIZABLE INTERFACE
+// The Externalizable interface, which extends Serializable, allows for flexibility and control of object serialization
+// via writeExternal() and readExternal() methods.  When overriding these two methods, the user can specify/customize
+// the items that are read and written, thus, allowing for better control and backwards compatibility.  Contrary to the
+// Serializable interface, the Externalizable interface CAN write/read transient and static variables.
+//
+// NOTE: The same items and order must be used during writing (writeExternal()) and reading (readExternal()).
+// NOTE: There must be a public default no-arg constructor to use readObject() on an object that implemented
+//       Externalizable, or a java.io.InvalidClassException will be thrown.
+//
+// SERIALVERSIONUID
+// The Serialization runtime associates a version number with each Serializable class called, this number is the
+// serialVersionUID.  This is used during Deserialization to verify that the sender and receiver of a serialized object
+// have loaded compatible classes (w.r.t. serialization). If the serialVersionUID differ during Deserialization, then a
+// InvalidClassException will be thrown.  If no serialVersionUID is defined, Java will automatically create one based on
+// the class'es attributes (note that small changes in the class can cause a different ID).  It is considered good
+// practice to define your own serialVersionUID; to do this, define "static final long serialVersionUID" and assign it
+// to a type of long value.
+//
+// SERIALVER
+// serialver is a tool that comes with JDK. It is used to get serialVersionUID number for Java classes. The tool is used
+// via the following command:
+//      serialver [-classpath classpath] [-show] [classname…]
+
+
+class SerializationReview{
+    public static void examples(){
+
+        SerializableClass serializableClass = new SerializableClass();
+        SerializableClass readSerializableClass = null;
+
+        serializableClass.transientInt = 8008;
+        serializableClass.staticInt = 6;
+        serializableClass.string = "Hello World!";
+        serializableClass.i = 42;
+
+        ExternalizableClass externalizableClass = new ExternalizableClass();
+        ExternalizableClass readExternalizableClass = null;
+
+        externalizableClass.transientInt = 80085;
+        externalizableClass.staticInt = 69;
+        externalizableClass.string = "Hello World!!!";
+        externalizableClass.i = 420;
+
+        System.out.println(serializableClass.toString());
+        System.out.println(externalizableClass.toString());
+
+        try {
+            // Serialize serializableClass:
+            ObjectOutputStream so = new ObjectOutputStream(new FileOutputStream("serializableClass.txt"));
+            so.writeObject(serializableClass);
+            so.flush();
+            so.close();
+
+            // Serialize externalizableClass:
+            so = new ObjectOutputStream(new FileOutputStream("externalizableClass.txt"));
+            so.writeObject(externalizableClass);
+            so.flush();
+            so.close();
+
+            serializableClass.transientInt = 800;
+            serializableClass.staticInt = -6;
+            serializableClass.string = "Hello!";
+            serializableClass.i = 4;
+
+            externalizableClass.transientInt = 800850;
+            externalizableClass.staticInt = 690;
+            externalizableClass.string = "Hello World!!!!!!!!!!!";
+            externalizableClass.i = 4200;
+
+            // Deserialize serializableClass:
+            ObjectInputStream si = new ObjectInputStream(new FileInputStream("serializableClass.txt"));
+            readSerializableClass = (SerializableClass)si.readObject();
+            si.close();
+
+            // Deserialize externalizableClass:
+            si = new ObjectInputStream(new FileInputStream("externalizableClass.txt"));
+            readExternalizableClass = (ExternalizableClass)si.readObject();
+            si.close();
+
+            // Delete files:
+            File f = new File("serializableClass.txt");
+            f.delete();
+            f = new File("externalizableClass.txt");
+            f.delete();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        System.out.println(readSerializableClass.toString());
+        System.out.println(readExternalizableClass.toString());
+
+    }
+}
+
+// To make a class serializable just implement java.io.Serializable; it's easy, but consider long term implications...
+class SerializableClass implements java.io.Serializable{
+
+    // It is considered good practice to specify a serialVersionUID.
+    private static final long serialVersionUID = 123456789L;
+    transient int transientInt;
+    static int staticInt;
+    String string;
+    int i;
+
+    public String toString() {
+        return ("serialVersionUID: " + serialVersionUID + " transientInt: " + transientInt + " staticInt: " + staticInt
+                + " string: " + string + " i: " + i);
+    }
+}
+
+// To make a class externalizable add implements Externalizable, then, add both writeExternal() and readExternal()
+// methods; this is also easy, but please consider the long term implications...
+class ExternalizableClass implements Externalizable{
+
+    // It is considered good practice to specify a serialVersionUID.
+    private static final long serialVersionUID = 1234567890L;
+    transient int transientInt;
+    static int staticInt;
+    String string;
+    int i;
+
+    // NOTE: When implementing Externalizable, there MUST be a default no-arg constructor to prevent a
+    // java.io.InvalidClassException when readObject is called on a file (of the serialized object).
+    public ExternalizableClass(){}
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        // NOTE: ORDER WRITTEN MUST MATCH ORDER READ.
+        out.writeObject(string);
+        // Can write/read transient and static variables with Externalizable.
+        out.writeInt(transientInt);
+        out.writeInt(staticInt);
+        // Using Externalizable, I can choose not to serialize something by not writing it:
+        // out.writeInt(i);
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        // NOTE: ORDER READ MUST MATCH ORDER WRITTEN.
+        string = (String)in.readObject();
+        staticInt = in.readInt();
+        transientInt = in.readInt();
+    }
+
+    public String toString() {
+        return ("serialVersionUID: " + serialVersionUID + " transientInt: " + transientInt + " staticInt: " + staticInt
+                + " string: " + string + " i: " + i);
+    }
+}
+
 
 
 ////////////////////////////////////////////////////
@@ -1907,5 +2230,86 @@ class ConcurrentReview {
 }
 
 
+
+////////////////////////////
+// GC (GARBAGE COLLECTOR) //
+////////////////////////////
+//
+// To understand the Garbage Collector system, we must first understand the JVM and JVM memory management.
+//
+// The Java Virtual Machine (JVM) acts as a run-time engine to run Java applications, and is a part of Java Runtime
+// Environment (JRE).  The JVM memory management system is divided into several main parts; the Stack, Heap, and
+// Permanent Generation.
+//
+// JVM STACK
+// For each thread the JVM creates a stack.  JVM stack memory does not need to be contiguous. The JVM pushes and pops
+// frames off the stack; stack frame consists of three parts:
+//      Local Variable Array: A zero-based, indexed, array of words,
+//      Operand Stack: Organized as array of words, that are pushed/popped from.
+//      Frame Data: Contains exception table, symbolic, and constant references.
+//
+// JVM HEAP
+//        The java Heap is divided into two main parts:
+//        - Young Generation - has "MINOR GC", subdivided into three parts:
+//        * Eden - Most of new objects are created. here
+//        * Survivor0 - Objects are checked and moved from one to the other survivor space.
+//        * Survivor1 - Objects that survive many GC cycles move from survivor space to Old Memory.
+//        - Old Memory - has "MAJOR GC", GC runs when full.
+//        Objects are created on the heap.
+//        Call hierarchy and local variables are stored on stacks.
+//        Java Heap dump is a snapshot of the heap at any given time.
+//        Garbage collection in the heap is mandatory.
+//        The Heap size can only be changed on JVM startup ()NOT dynamically once running).
+//
+// JVM PERMANENT GENERATION
+//        Permanent Generation (a.k.a. Perm Gen) contains the application metadata required
+//        by the JVM to describe the classes and methods used in the application.
+//        NOTE: The Perm Gen is not part of Java Heap memory.
+//        Perm Gen is populated by JVM at runtime based on the classes used by the
+//        application, it also contains Java SE library classes and methods.
+//        Perm Gen objects ARE garbage collected in a full garbage collection.
+//
+// GARBAGE COLLECTION
+// Garbage Collection tracks each and every object available in the JVM heap space and removes unused objects when they
+// become eligible.  This comes at a slight performance cost, or overhead, but removes the need for the user to allocate
+// and de-allocating memory.
+//
+// Objects becomes eligible for GC when there is no live reference for that object, or, it can no longer be reached by
+// any live thread. Note that cyclic references do not count as a live reference (i.e., if two objects are pointing to
+// each other, neither hav a live reference, then both are eligible for GC).
+//
+// The object that performs the garbage collection is called a Garbage Collector or GC.  There are four implementations
+// of garbage Collector:
+//      Serial      Simplest, freezes all application threads when it runs: java -XX:+UseSerialGC -jar Application.java
+//      Parallel    A.k.a Throughput Collectors, use multiple threads for managing heap space, also freezes other
+//                  application threads while performing GC: java -XX:+UseParallelGC -jar Application.java
+//      CMS         A.k.a. Concurrent Mark and Sweep, uses multiple garbage collector threads for GC, has short GC
+//                  pauses, but responds slower: java -XX:+UseParNewGC -jar Application.java
+//      G1          Garbage First, added in Java 1.7, increases throughput and decreases GC pause time, is the DEFAULT
+//                  collector in Java 9: java -XX:+UseG1GC -jar Application.java
+//
+// JVM FLAGS
+//      -X                          Shows all -X options
+//      -Xss<size>                  Set java thread stack size
+//      -Xmx<size>                  Set maximum memory allocation pool.
+//      -Xms<size>                  Set initial memory allocation pool.
+//      -Xmn<size>                  Set the initial and maximum size (in bytes) of heap for young generation/nursery.
+//      -XX:+UseSerialGC            Set Serial Collector as GC.
+//      -XX:+UseParallelGC          Set Parallel Collector as GC.
+//      -XX:+UseConcMarkSweepGC     Set CMS (Concurrent Mark and Sweep Collector) as GC.
+//      -XX:+UseG1GC                Set G1 Collector as GC.
+//      -XX:PermGen<size>           Set initial PermGen size.
+//      -XX:MaxPermSize<size>       Set the maximum PermGen size.
+//      -XX:SurvivorRatio=<ratio>   Set ratio of Eden space and Survivor space.
+//      -XX:NewRatio=<ratio>        Set ratio of old/new generation sizes (default is 2).
+
+class GCReview {
+    public static void examples() {
+        // NOTE: Garbage Collecting can only be REQUESTED, and not immediately forced, via:
+        System.gc();  // Class method, non-native method, in java.lang.System.
+        // Or:
+        Runtime.getRuntime().gc();  // - Instance method, native method, in java.lang.Runtime.
+    }
+}
 
 
