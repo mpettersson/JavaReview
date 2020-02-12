@@ -1,20 +1,21 @@
 
-
 Java Interview Review
 =====================
 
-[//]: # (This file is formatted this way so that it can be printed, then folded in half and studied)
+[//]: # (This file is formatted such that it can be printed and the solutions can be obscured while reviewing.)
 
-This file is meant as a very quick study guide for the polyglot programmer who needs to make sure that
-they don't forget something foolish in an interview.  
-
-
+This file is meant as a very quick study guide for the polyglot programmer who needs to make sure that they don't forget 
+something foolish in an interview.  
 
 String & Char Manipulation
 --------------------------
 -[ ] Split  
                                         String str = "Hello Hello World!";  
                                         String splitStrs[] = str.split(" ");  
+-[ ] Trim/Strip  
+                                        String s = "    M a tthew \t  \n Pettersson    \n";  
+                                        String s1 = s.trim();  // ONLY removes whitespace before & after (NOT in between).  
+                                        s = s.replaceAll("\\s+", "");  // Removes all whitespace and non-visible char.  
 -[ ] Replace  
                                         char oldChar = 'l';  
                                         char newChar = 'd';  
@@ -22,7 +23,7 @@ String & Char Manipulation
                                         String regex = "ll";  
                                         String replacement = "LL";  
                                         String raStr = rStr.replaceAll(regex, replacement);  
-                                        String rfStr = rStr.replaceFirst(regex, replacement);                                          
+                                        String rfStr = rStr.replaceFirst(regex, replacement);            
 -[ ] Find  
                                         int fIndex = str.indexOf("Hello");  
                                         int lIndex = str.lastIndexOf("Hello");  
@@ -39,7 +40,7 @@ String & Char Manipulation
 -[ ] Is Digit/Alpha  
                                         Character.isLetter('c');  
                                         Character.isDigit('3');  
--[ ] Array --> String                           
+-[ ] Array --> String     
                                         double[] doubs = {2.34, 44.566, 23.66};  
                                         Arrays.toString(doubs)  
 -[ ] String --> Array  
@@ -81,8 +82,8 @@ Array Manipulation
                                         String[] myStringArray2 = {"a", "b", "c"};  
                                         String[] myStringArray3 = new String[]{"a", "b", "c"};  
 -[ ] Sub-array:                      
-                                        Arrays.copyOf(Object[] src, int newLength); (truncates or fills with null)  
-                                        Arrays.copyOfRange(Object[] src, int from, int to); (fills with null)  
+                                        Arrays.copyOf(Object[] src, int newLength); // (truncates or fills with null)  
+                                        Arrays.copyOfRange(Object[] src, int from, int to); // (fills with null)  
 -[ ] Fill  
                                         Arrays.fill(Object[] src, Object value);  
                                         Arrays.fill(Object[] src, int from, int to, Object value);  
@@ -129,14 +130,14 @@ Numbers & Math
                                         Math.ceil(d);  
                                         Math.abs(x);  
 -[ ] Random  
-                                        Math.random();                  // Returns double >= 0.0 and < 1.0   
+                                        Math.random();              // Returns double >= 0.0 and < 1.0   
                                         int bound = 10, seed = 100;  
                                         byte[] bytes = new byte[10];  
                                         Random random = new Random();  
-                                        random.nextInt();               // Returns int >= Integer.MIN_VALUE and <= Integer.MAX_VALUE  
-                                        random.nextInt(bound);          // Returns int >=0 < bound, ONLY int can have bound.  
-                                        random.nextDouble();            // Returns double >= 0.0 and < 1.0  
-                                        random.nextBytes(bytes);        // Puts random bytes into each index of supplied array.  
+                                        random.nextInt();           // Returns INT.MIN_VALUE <= INT <= INT.MAX_VALUE  
+                                        random.nextInt(bound);      // Returns 0 <= INT < bound, ONLY int can have bound.  
+                                        random.nextDouble();        // Returns 0.0 <= DOUBLE < 1.0  
+                                        random.nextBytes(bytes);    // Puts random bytes into each index of supplied array.  
                                         random.setSeed(seed);  
 -[ ] Decimal/Binary/Hex/Octal  
                                         int num = 32;  
@@ -208,6 +209,147 @@ Formatting & I/O
                                         String path = currentRelativePath.toAbsolutePath().toString();  
                                         System.out.println("Current relative path is: " + path);  
 
+Classes & Objects
+-----------------
+-[ ] Objects  
+                                        Basic unit of OOP.  
+                                        Consists of:  
+                                            - State - Attributes or fields.  
+                                            - Behavior - Methods.  
+                                            - Identity - Name.  
+-[ ] Creating Objects  
+                                        Using the new keyword:  
+                                            "Cls c = new Cls();"  
+                                        Three methods which internally use the new keyword:  
+                                            - Class.forName(String className).newInstance()   
+                                                Cls c = (Cls)Class.forName("com.path.to.Cls").newInstance();  
+                                            - clone()  
+                                                Cls c2 = (Cls)c.clone();  
+                                            - Deserialization  
+                                                FileInputStream file = new FileInputStream(filename);  
+                                                ObjectInputStream in = new ObjectInputStream(file);  
+                                                Cls c = (Cls)in.readObject();  
+-[ ] Class  
+                                        class Cls extends OneSuperClass implements IMultiple, IInterfaces{  
+                                            // Static Member Var - Shared by all instances of the class.  
+                                            private static int sharedVar = 0;  
+                                            // Instance Vars aka Fields aka Member Vars.  
+                                            private String s;  
+                                            // Constructor  
+                                            public Cls(String s, int i){  
+                                                this("constructor chaining");  
+                                                this.s = s;  
+                                                sharedVar++;  
+                                            }  
+                                            // Instance Method - Created when the Cls instance is instantiated.  
+                                            public void instanceMethod(){}  
+                                            // Static Methods - Can't access instance methods or instance vars directly.  
+                                            // Exist before Cls instance is instantiated.  
+                                            public static void staticMethod(){}  
+                                            // Multiple Args Method   
+                                            public void multipleArgsMethod(int ... vals){for(int x : vals){}  
+                                        }   
+-[ ] Abstract Class  
+                                        // Only methods/classes can be abstract.   
+                                        // Any class extending an abstract class must implement all abstract methods...  
+                                        // Can be empty, can extend or implements.  
+                                        abstract class AbstractClass extends AbstractEmpty implements InterfaceEmpty {  
+                                            // Can have member (inherited) variables (interfaces can't unless static).  
+                                            private String name;  
+                                            // Can have a constructor (interfaces can't)  
+                                            public AbstractClass(String name){this.name = name;}  
+                                            // Can have non-abstract methods (or methods w/ bodies):  
+                                            public String getName() {return name;}  
+                                            public abstract void doSomething();  
+                                            public abstract void doSomethingElse(int someInt);  
+                                        }  
+-[ ] Interface  
+                                        // Can only extend an interface.  
+                                        // Can't implement an interface.  
+                                        // Can't extend an abstract class.  
+                                        interface InterfaceClass extends InterfaceClassEmpty{  
+                                            // Can ONLY have public static variables.  
+                                            public static String staticString = "Only static variables are allowed.";  
+                                            public static final int STATIC_INT = 838;  
+                                            // (Pre-Java 9) Can only have public methods (no private or protected).  
+                                            public void interfaceMethod();  
+                                            public boolean interfaceMethodWithArg(int i);  
+                                            // In Java 9, can have private methods.  
+                                            //private void privateMethod();  
+                                            // In Java 8, can contain default methods (with implementation).  
+                                            default void defaultMethod(int defaultArg){  
+                                                System.out.println("Can do all the things.");}  
+                                        }  
+-[ ] Generics  
+                                        // Allows types to be parameterized.  
+                                        // Benefits: Code Reuse, Type Safety, Elimination of casts, generic algorithms.  
+                                        // Added to Java5  
+                                        // Sorta similar to C++ templates.   
+                                        // Use <> to specify parameter types.  
+                                        class ClassWithGenerics<T extends Comparable>{  
+                                            T valWithGenericType;  
+                                            // Static keyword must have matching Generic type if generic type used in method.  
+                                            // Static generic methods can be used in non-generic classes.  
+                                            public static<T extends Object> void staticMethod(T[] arr){}  
+                                            public void setValWithGenericType(T valWithGenericType){this.valWithGenericType=val;}  
+                                            public T getValWithGenericType(){return valWithGenericType;}  
+                                            public void usingRawAndGenerics() {  
+                                                // List with Raw types:  
+                                                ArrayList rawTypesList = new ArrayList();  
+                                                rawTypesList.add(1); rawTypesList.add("hi"); rawTypesList.add(1.2);  
+                                                // List Using Generics:  
+                                                ArrayList<Integer> intList = new ArrayList<>();  
+                                                intList.add(144);  
+                                            }  
+                                            // Must typecast when referencing; prone to run time errors.  
+                                            public static void printArrayList(ArrayList<?> aL){  
+                                                for(Object x : aL) System.out.println(x);}  
+                                        }  
+-[ ] Generics Implementation  
+                                        The implementation of Java generics is rooted in an idea of "type erasure"; this
+                                        technique eliminates the parameterized types when source code is translated to 
+                                        JVM byte code. Other aspects of Java generics are:  
+                                            - Cannot use primitive types.  
+                                            - Generics can be restricted to certain types.  
+                                            - All instances of a generic class, regardless of type params, are the same 
+                                                (because type params are erased at runtime).  
+                                        NOTE: Java Generics != C++ Templates; C++ Templates are a glorified macro set; 
+                                        the compiler creates a new copy of the template for each type.  
+-[ ] Abstract Class vs Interface  
+                                        Abstract Class  
+                                            - "IS" something.  
+                                            - Uses "extends".  
+                                            - Less flexible.  
+                                        Interface  
+                                            - "CAN" do something.  
+                                            - The end class will have additional functionality.  
+                                            - Uses "implements".  
+                                            - More Flexible.  
+                                            - Used on unrelated classes.  
+-[ ] Composition vs Inheritance  
+                                        Composition 
+                                            - "HAS A" relation.  
+                                            - Accomplished by including an INSTANCE of another class as a FIELD.  
+                                        Inheritance 
+                                            - "IS A" relation.  
+                                            - Accomplished by EXTENDING another class.  
+-[ ] Method Overloading vs 
+     Method Overriding  
+                                        Method Overloading  
+                                            - Must have same name & different parameters.  
+                                            - Can have different return types.  
+                                            - Can have different modifiers.  
+                                            - Can throw different checked or unchecked exceptions.  
+                                        Method Overriding     
+                                            - Only inherited, non-constructor/private/final methods can be overridden.  
+                                            - Must have same name and args as overridden method.  
+                                            - Must return same (or subclassed) type of the parent class.  
+                                            - Must have same (or less restrictive) access modifier of the parent class.  
+                                            - Use super.methodName() to call the superclass ver. of an overridden method.  
+                                            - Should, but don't have to, annotate with @Override.  
+                                            - JVM will determine what method will be called at runtime.  
+                                            - Can't override static methods (only instance methods).  
+     
 Misc. Java Syntax
 -----------------
 -[ ] Exit  
@@ -230,7 +372,7 @@ Built-In Data Structures
                                         Class in package java.util;   
                                         Includes sort, search, shuffle, swap, get, and other utility methods.                                        
 -[ ] Concurrent Collections  
-                                        Additions to the collections framework to solve "Memory Consistency Errors" or synchronization.  
+                                        Additions to collections fwk to solve "Memory Consistency Errors" or synchronization.  
                                         Performs better than synchronized version of the traditional collections.  
                                         A Package in java.util (has atomic and locks subpackages)  
                                         DS Classes: ArrayBlockingQueue, ConcurrentHashMap, ConcurrentLinkedDeque,
@@ -239,8 +381,8 @@ Built-In Data Structures
                                         LinkedBlockingQueue, LinkedTransferQueue, PriorityBlockingQueue, and
                                         SynchronousQueue.   
 -[ ] List Interface  
-                                        LIST IMPLEMENTATIONS    | get  | add  | contains    | next  | remove(0) | iterator.remove       
-                                        |:---------------------:|:----:|-----:|:-----------:|:-----:|:---------:|:---------------:|       
+                                        LIST IMPLEMENTATIONS    | get  | add  | contains    | next  | remove(0) | iterator.remove  
+                                        |:---------------------:|:----:|-----:|:-----------:|:-----:|:---------:|:-------------:|  
                                         ArrayList               | O(1) | O(1) | O(n)        | O(1)  | O(n)      | O(n)  
                                         LinkedList              | O(n) | O(1) | O(n)        | O(1)  | O(1)      | O(1)  
                                         CopyOnWrite-ArrayList   | O(1) | O(n) | O(n)        | O(1)  | O(n)      | O(n)  
@@ -363,23 +505,62 @@ Built-In Data Structures
                                         Implements Cloneable, java.io.Serializable   
 -[ ] HashSet vs HashMap vs Hashtable vs
      TreeMap vs LinkedHashMap  
-                                        HashSet - A SET (via HashMap), allows ONE null, NOT ordered, NOT synchronized.  
-                                        HashMap - O(1) find/add, NOT synchronized, allows ONE null, NOT ordered, (via llist[]).  
-                                        Hashtable - IS synchronized.  
-                                        TreeMap - O(log n) find/add, NOT synchronzied, ORDERED keys, via (Red-Black tree).  
-                                        LinkedHashMap - O(1) find/add, NOT syncrhonized, ORDERED keys, via (dlinkedlist).  
--[ ] ArrayList vs LinkedList vs Vectors  
-                                        ArrayList - RESIZABLE, allows NULL, is NOT synchronized.  
-                                        LinkedList - Doubly-linked list, NOT synchronized.  
-                                        Vectors - IS Synchronized. Similar to ArrayList.  
+                                        HashSet  
+                                            - A SET (via HashMap),  
+                                            - Allows ONE null,  
+                                            - NOT ordered,  
+                                            - NOT synchronized.  
+                                        HashMap  
+                                            - O(1) find/add,  
+                                            - NOT synchronized,  
+                                            - Allows ONE null,  
+                                            - NOT ordered,  
+                                            - Implemented via linkedList.  
+                                        Hashtable  
+                                            - IS synchronized.  
+                                        TreeMap  
+                                            - O(log n) find/add,  
+                                            - NOT synchronized,  
+                                            - ORDERED keys,  
+                                            - Implemented via Red-Black tree.  
+                                        LinkedHashMap  
+                                            - O(1) find/add,  
+                                            - NOT synchronized,  
+                                            - ORDERED keys,  
+                                            - Implemented via doubly-linkedList.  
+-[ ] ArrayList vs LinkedList vs Vector  
+                                        ArrayList  
+                                            - RESIZABLE,   
+                                            - Allows NULL,  
+                                            - Is NOT synchronized.  
+                                        LinkedList  
+                                            - Doubly-linked list,   
+                                            - NOT synchronized.  
+                                        Vector  
+                                            - IS Synchronized.  
+                                            - Similar to ArrayList.  
 -[ ] Collection vs Collections  
-                                        Collection - Root interface...  
-                                        Collections - Utility class with static classes and methods.   
+                                        Collection  
+                                            - Root interface...  
+                                        Collections  
+                                            - Utility class with static classes and methods.   
 -[ ] Collections vs 
+     Synchronized Collections vs 
      Concurrent Collections   
-                                        Collections - Only Vector, Stack and Hashtable are synchronized; so can get 
-                                        RuntimeException ConcurrentModificationException.  
-                                        Concurrent Collections - Has synchronization.  
+                                        Collections  
+                                            - Only Vector, Stack and Hashtable are synchronized.  
+                                        Synchronized Collections  
+                                            - Wrappers that synchronized collections through intrinsic locking.  
+                                            - Entire collections are locked.  
+                                            - Methods:  
+                                                - synchronizedCollection()  
+                                                - synchronizedList()  
+                                                - synchronizedMap()  
+                                                - synchronizedSet()  
+                                                - synchronizedSortedSet()   
+                                        Concurrent Collections  
+                                            - Achieves thread-safety by dividing their data into segments.  
+                                            - Better performance.  
 
 Data Structures
 ---------------
@@ -461,9 +642,9 @@ Concurrency
                                         using methods like wait(), notify(), notifyAll() (where processes must use 
                                         inter-process communication).  
                                         Threads can be created via:  
-                                           (1) Extend the java.lang.Thread class.  
-                                           (2) Implement the java.lang.Runnable interface.  
-                                           (3) Implement the java.util.concurrent.Callable interface using FutureTask and Thread.  
+                                           - Extend the java.lang.Thread class.  
+                                           - Implement the java.lang.Runnable interface.  
+                                           - Implement the java.util.concurrent.Callable interface via FutureTask and Thread.  
 -[ ] Synchronization  
                                         The synchronized keyword restricts multiple threads from executing code 
                                         simultaneously on the same object instance; synchronized can be used on a METHOD 
@@ -486,6 +667,64 @@ Concurrency
                                         Executors -  A class with (static) Factory and utility methods for Executor, 
                                             ExecutorService, ScheduledExecutorService, ThreadFactory}, Callable classes.
                                         ExecutorService - A manageable executor that can produce Future objects. 
+
+Exceptions
+----------
+-[ ] Throwable vs Error vs Exception  
+                                        Throwable  
+                                            - "Is the superclass of all errors and exceptions in the Java language."
+                                            - Implements Serializable.  
+                                            - In java.lang.  
+                                        Error  
+                                            - A serious problem that should not be caught (related to environment).  
+                                            - Probably can't recover.  
+                                            - Unchecked.   
+                                            - Extends Throwable.  
+                                            - In java.lang.  
+                                            - Examples:  
+                                                - StackOverflowError  
+                                                - OutOfMemoryError  
+                                                - AssertionError  
+                                                - VirtualMachineError  
+                                        Exception   
+                                            - A "condition that a reasonable application might want to catch".  
+                                            - Checked (Everything under RuntimeExceptions) & Unchecked.  
+                                            - Extends Throwable.  
+                                            - In java.lang.  
+                                            - Examples:  
+                                                - IOException  
+                                                - ArrayIndexOutOfBoundsException  
+                                                - NullPointerException  
+                                                - ClassCastException  
+-[ ] Checked vs Unchecked Exceptions  
+                                        Checked Exceptions  
+                                            - Checked at compile time.  
+                                            - Are exceptions that a "client can reasonably be expected to recover" from.  
+                                            - Methods must either handle via catch block or declare checked exceptions 
+                                              with the throws keyword. 
+                                        Unchecked Exceptions  
+                                            - Not checked at compiled time. 
+                                            - Are exceptions "a client cannot do anything to recover" from. 
+-[ ] Exception Syntax  
+                                        // Never catch Throwable, Error, or RuntimeException, it's supposed to fail...  
+                                        try{  
+                                            // Causes built-in java.lang.ArithmeticException  
+                                            int badInt = 10/0;  
+                                            // NOTE: The next line will never execute (but would cause custom exception):  
+                                            throw new Exception("BAD STUFF");  
+                                        }catch (ArithmeticException ex){  
+                                            System.out.println(ex.getMessage());  
+                                            System.out.println(ex.toString());  
+                                        // Catch two exceptions in one catch block  
+                                        } catch( NullPointerException | ArrayIndexOutOfBoundsException e) {   
+                                            System.out.println(e.getMessage());  
+                                        // Generic catch all:    
+                                        }catch (Exception ex){  
+                                            System.out.println(ex.getMessage());  
+                                        // Always executes (unless thread dies), even if return was in try body:  
+                                        }finally {  
+                                            System.out.println("Clean up here, Close DBs, Etc...");  
+                                        }  
 
 JVM Memory & Garbage Collecting
 -------------------------------
@@ -517,15 +756,15 @@ JVM Memory & Garbage Collecting
 -[ ] JVM Heap  
                                         The java Heap is divided into two main parts:  
                                             - Young Generation - has "MINOR GC", subdivided into three parts:  
-                                                * Eden - Most of new objects are created here.  
-                                                * Survivor0 - Objects are checked and moved from one to the other survivor space.  
-                                                * Survivor1 - Objects that survive many GC cycles move from survivor space to Old Memory.   
+                                                - Eden - Most of new objects are created here.  
+                                                - Survivor0 - Objs are checked & moved from one to other survivor space.  
+                                                - Survivor1 - Objs that survive many GCs move from survivor space to Old Mem.   
                                             - Old Memory - has "MAJOR GC", GC runs when full.   
                                         Objects are created on the heap.   
                                         Call hierarchy and local variables are stored on stacks.  
                                         Java Heap dump is a snapshot of the heap at any given time.  
                                         Garbage collection in the heap is mandatory.    
-                                        The Heap size can only be changed on JVM startup ()NOT dynamically once running).  
+                                        The Heap size can only be changed on JVM startup (NOT dynamically once running).  
 -[ ] JVM Permanent Generation  
                                         Permanent Generation (a.k.a. Perm Gen) contains the application metadata required 
                                         by the JVM to describe the classes and methods used in the application.  
@@ -553,7 +792,7 @@ JVM Memory & Garbage Collecting
                                             2. The (object's) reference variable is reassigned.           
                                             3. The object was created inside a method.  
                                             4. There is a cyclic dependency where two or more objects reference each 
-                                                other (and they have no other references pointing to them).                                                                    
+                                                other (and they have no other references pointing to them).  
 -[ ] Request Garbage Collecting  
                                         Garbage Collecting can only be REQUESTED, not immediately forced, with:  
                                             - System.gc() - Class method, non-native method, in java.lang.System.  
@@ -580,10 +819,20 @@ Miscellaneous Java
                                             (3) ListIterator - BI-DIRECTIONAL, CAN Remove/Add/Set, List Collection ONLY.  
 -[ ] Iterator vs Enumeration vs
      For-Each vs ListIterator    
-                                        Iterator - Works on ALL Collections objects, Forward Read and Remove.  
-                                        Enumeration - OLD, Forward Read ONLY, Vector & Hashtable ONLY.  
-                                        For-Each - Is for traversal, CAN'T modify collection (throws ConcurrentModificationException).  
-                                        ListIterator - Extends Iterator, Lists ONLY, BI-DIRECTIONAL, add/remove/set elements.  
+                                        Iterator  
+                                            - Works on ALL Collections objects,   
+                                            - Forward Read and Remove.  
+                                        Enumeration  
+                                            - OLD,  
+                                            - Forward Read ONLY,  
+                                            - Vector and Hashtable ONLY.  
+                                        For-Each 
+                                            - Is for traversal,  
+                                            - CAN'T modify collection (throws ConcurrentModificationException).  
+                                        ListIterator  
+                                            - Extends Iterator,  
+                                            - Lists ONLY,  
+                                            - BI-DIRECTIONAL Add, Remove, and Set.  
 -[ ] Stream (Collection)  
                                         Takes input from the Collections, Arrays, or I/O channels perform Intermediate
                                         and Terminal Operations to augment the data.  
@@ -592,10 +841,12 @@ Miscellaneous Java
                                         Local vars referenced from a Lambda Expression must be final or effectively final.  
 -[ ] Map  
                                         List<Integer> numbers = Arrays.asList(2,2,3,4,5,3,6,7,8,9);  
-                                        List<Integer> listInteger = numbers.stream().map(x-> x * x ).collect(Collectors.toList());  
+                                        List<Integer> listInteger = numbers.stream().map(
+                                            x-> x * x ).collect(Collectors.toList());  
 -[ ] Filter  
                                         List<String> names = Arrays.asList("Matthew", "Brenton", "Chris", "Michelle");  
-                                        List<String> filteredNames = names.stream().filter(s->s.startsWith("M")).collect(Collectors.toList());  
+                                        List<String> filteredNames = names.stream().filter(
+                                            s->s.startsWith("M")).collect(Collectors.toList());  
 -[ ] Reduce  
                                         int even = numbers.stream().filter(x->x%2==0).reduce(0,(ans,i)-> ans+i);  
 -[ ] Access Modifiers    
@@ -617,7 +868,7 @@ Miscellaneous Java
                                         provide information to the compiler and JVM.  
 -[ ] Serializable Interface   
                                         A Marker Interface that provides serialization, or writes objects states to a 
-                                        file via ObjectOutputStream.writeObject(Object o) and ObjectInputStream.readObject().  
+                                        file via ObjectOutputStream.writeObject(Object o) & ObjectInputStream.readObject().  
                                         Uses default serialization (does not serialize static or transient variables).  
 -[ ] Externalizable Interface                                        
                                         Externalizable extends Serializable, allows for more flexibility and control of 
@@ -634,7 +885,7 @@ Miscellaneous Java
                                         Is in the java.lang package.  
                                         USE the Collections.sort(List) method to sort Comparable type elements.  
 -[ ] Comparator Interface  
-                                        Provides MULTIPLE sorting sequences (i.e., can sort elements on multiple attributes
+                                        Provides MULTIPLE sorting sequences (i.e., can sort ele on multiple attributes
                                         such as id, name, price).  
                                         Does NOT affect the original class (is defined external to the original class).  
                                         Provides the compare() method to sort elements.  
@@ -644,11 +895,16 @@ Miscellaneous Java
                                         Is a package private supporting class for the Comparator Interface.   
 -[ ] Comparable vs Comparator vs 
      Comparators  
-                                        Comparable Interface - Provides a SINGLE sorting seq (the "natural order"), DOES 
-                                            affect the original class, has compareTo() method.  
-                                        Comparator Interface - Provides multiple sorting sequences (different elements of
-                                            an object), DOESN'T affect the original class, and has the compare() method.  
-                                        Comparators - Is a package private supporting class for the Comparator Interface.  
+                                        Comparable Interface  
+                                            - Provides a SINGLE sorting seq (the "natural order"),  
+                                            - DOES affect the original class,  
+                                            - Has compareTo() method.  
+                                        Comparator Interface  
+                                            - Provides multiple sorting sequences (different elements of an object),  
+                                            - DOESN'T affect the original class,  
+                                            - Has compare() method.  
+                                        Comparators  
+                                            - Is a package private supporting class for the Comparator Interface.  
 -[ ] final vs finally, vs finalize  
                                         final - The final statement has different meaning depending on its context:  
                                             final primitiveVar - The value of the variable CAN'T change.  
@@ -661,37 +917,15 @@ Miscellaneous Java
                                             the try block.  
                                         finalize - An objects method called by the Garbage Collector before the GC 
                                         destroys the object.   
--[ ] Generics Implementation  
-                                        The implementation of Java generics is rooted in an idea of "type erasure"; this
-                                        technique eliminates the parameterized types when source code is translated to 
-                                        JVM byte code. Other aspects of Java generics are:  
-                                            Cannot use primitive types.  
-                                            Generics can be restricted to certain types.  
-                                            All instances of a generic class, regardless of type params, are the same 
-                                                (because type params are erased at runtime).  
-                                        NOTE: Java Generics != C++ Templates; C++ Templates are a glorified macro set; 
-                                        the compiler creates a new copy of the template for each type.  
 -[ ] Object Reflection  
                                         Object Reflection is a feature in Java that provides a way to get reflective 
                                         information about Java classes and objects, and perform operations such as:  
-                                            1.  Getting information about the methods and fields present inside the 
-                                                class at runtime.  
-                                            2.  Creating a new instance of a class.  
-                                            3.  Getting and setting the object fields directly by getting field reference, 
-                                                regardless of what the access modifier is.  
+                                            - Get info about the methods and fields present inside the class at runtime.  
+                                            - Creating a new instance of a class.  
+                                            - Get/Set obj fields directly via field ref, regardless of access modifier.  
                                         This helps to observe/manipulate runtime behavior, debug or test programs, and 
                                         to call methods by name (when you don't know them in advance).  
   
-
-
-
-
-
-
-
-
-
-
 
 
 

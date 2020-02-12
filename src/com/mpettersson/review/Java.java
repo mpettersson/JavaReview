@@ -882,11 +882,22 @@ public class Java {
         System.out.println("Check if a stack is empty with stackVar.empty(): " + stackVar.empty());
 
 
-        ////////////////
-        // EXCEPTIONS //
-        ////////////////
+        /////////////////////////
+        // EXCEPTIONS & ERRORS //
+        /////////////////////////
 
-        // All exceptions are subclasses of Exception and RuntimeException
+        // The Exceptions and Errors are subclasses of Throwable and can be found in the java.lang package.
+        //
+        // ERRORS
+        // A represent a serious problem that should not be caught, are often related to environment, and are
+        // unrecoverable.  All Errors are "unchecked", or are not checked at compile time.
+        // Examples include StackOverflowError, OutOfMemoryError, AssertionError, and VirtualMachineError.
+        //
+        // EXCEPTIONS
+        // Are a "condition that a reasonable application might want to catch", and are often more related to the
+        // application.  RuntimeException and all of it's subclasses are "unchecked" exceptions, all other Exceptions
+        // are "checked" exceptions, or are checked at compile time, and must be added to a classes/methods throw clause.
+        // Examples include IOException, ArrayIndexOutOfBoundsException, NullPointerException, and ClassCastException.
 
         try{
             int badInt = 10/0;
@@ -894,14 +905,16 @@ public class Java {
             System.out.println("Can't divide by zero");
             System.out.println(ex.getMessage());
             System.out.println(ex.toString());
-        } catch( NullPointerException | ArrayIndexOutOfBoundsException e) { // Catch two exceptions in one catch block
+        // Catch two exceptions in one catch block
+        } catch( NullPointerException | ArrayIndexOutOfBoundsException e) {
             System.out.println(e.getMessage());
+        // Generic catch all:
         }catch (Exception ex){
             System.out.println(ex.getMessage());
+        // Finally always executes (unless thread is killed), even if a return statement is in try body.
         }finally {
             System.out.println("Clean up here, Close DBs, Etc...");
         }
-
 
         // THROW A CUSTOM EXCEPTION
         try{
@@ -1074,9 +1087,9 @@ public class Java {
         // 4 TYPES OF NESTED CLASS
         //    static nested class
         //    non-static nested class (inner class)
-        //    local class (inner class in a scope block/method) -- not used too often, in theory would help with encapsulation.
-        //    anonymous nested class (no class name) -- used only once, used alot with attaching event handlers to buttons (for example, in android apps).
-
+        //    local class (inner class in a scope block/method) -- not used often, in theory, helps with encapsulation.
+        //    anonymous nested class (no class name) -- used only once, used a lot with attaching event handlers to
+        //                                              buttons (for example, in android apps).
 
 
         // How to instantiate classes.
@@ -1103,69 +1116,6 @@ public class Java {
 }
 
 
-//////////////////////
-// ABSTRACT CLASSES //
-//////////////////////
-
-abstract class AbstractClassEmpty {
-}
-
-// CAN EXTENDS or IMPLEMENT in an abstract class.
-abstract class AbstractClass extends AbstractClassEmpty implements InterfaceClassEmpty {
-
-    // Can have member variables that are inherited (can't in interface unless static).
-    private String name;
-
-    // Can have a constructor (interfaces can't)
-    public AbstractClass(String name){
-        this.name = name;
-    }
-
-    // Can have non-abstract methods (that have bodies) in an abstract class
-    public String getName() {
-        return name;
-    }
-
-    // Remember that any class that implements (extends) this class must implement ALL of the things defined in this,
-    // Where if they extended a base class, they can choose what they want to implement.
-
-    // Only methods (and class) are allowed to be abstract.
-    // Methods that are abstract don't have bodies (but you can have non-abstract methods that must have bodies in an abstract class).
-    public abstract void doSomething();
-    public abstract void doSomethingElse(int someInt);
-}
-
-
-////////////////
-// INTERFACES //
-////////////////
-
-interface InterfaceClassEmpty {
-}
-
-// An interface can ONLY extend an interface (can't implement an interface, can't extend an abstract class).
-interface InterfaceClass extends InterfaceClassEmpty{
-
-    // Can ONLY have public static variables.
-    public static String staticString = "Only static variables are allowed.";
-    public static final int STATIC_INT = 838;
-
-    // Can ONLY have public methods (no private or protected).
-    public void interfaceMethod();
-    public boolean interfaceMethodWithArg(int i);
-
-    // SINCE JAVA 8, Interfaces can contain default methods (with implementation).
-    default void defaultMethod(int defaultArg){
-        System.out.println("Can actually implement something (have a body of a method in an Interface).");
-    }
-
-    // SINCE JAVA 9, Interfaces can have private methods.
-    //private void privateMethod();
-}
-
-
-
-
 class Shape{
     // STATIC MEMBER VARIABLE
     //   SHARED by all instances of the class. i.e., scanners or loggers.
@@ -1187,7 +1137,6 @@ class Shape{
     // INSTANCE METHOD
     //   This method is created when the class is instantiated with the "new" keyword.
     public void instanceMethod(){
-
     }
 
     // STATIC METHODS
@@ -1260,14 +1209,104 @@ class Circle extends Shape{
     }
 }
 
+
+//////////////////////
+// ABSTRACT CLASSES //
+//////////////////////
+
+abstract class AbstractClassEmpty {
+}
+
+// CAN EXTENDS or IMPLEMENT in an abstract class.
+abstract class AbstractClass extends AbstractClassEmpty implements InterfaceClassEmpty {
+
+    // Can have member variables that are inherited (can't in interface unless static).
+    private String name;
+
+    // Can have a constructor (interfaces can't)
+    public AbstractClass(String name){
+        this.name = name;
+    }
+
+    // Can have non-abstract methods (that have bodies) in an abstract class
+    public String getName() {
+        return name;
+    }
+
+    // Remember that any class that implements (extends) this class must implement ALL of the things defined in this,
+    // Where if they extended a base class, they can choose what they want to implement.
+
+    // Only methods (and class) are allowed to be abstract.
+    // Methods that are abstract don't have bodies (but you can have non-abstract methods that must have bodies in an abstract class).
+    public abstract void doSomething();
+    public abstract void doSomethingElse(int someInt);
+}
+
+
+class Teeest extends AbstractClass{
+
+    public Teeest(){
+        super("blah");
+    }
+    public void doSomething(){
+        return;
+    }
+    public void doSomethingElse(int someInt){
+        return;
+    }
+}
+
+////////////////
+// INTERFACES //
+////////////////
+
+interface InterfaceClassEmpty {
+}
+
+interface IAnotherEmptyClass{
+
+}
+
+// An interface can ONLY extend an interface (can't implement an interface, can't extend an abstract class).
+interface InterfaceClass extends InterfaceClassEmpty, IAnotherEmptyClass{
+
+    // Can ONLY have public static variables.
+    public static String staticString = "Only static variables are allowed.";
+    public static final int STATIC_INT = 838;
+
+    // Pre-Java9, Can ONLY have public methods (no private or protected).
+    public void interfaceMethod();
+    public boolean interfaceMethodWithArg(int i);
+
+    // SINCE JAVA 9, Interfaces can have private methods.
+    //private void privateMethod();
+
+    // SINCE JAVA 8, Interfaces can contain default methods (with implementation).
+    default void defaultMethod(int defaultArg){
+        System.out.println("Can actually implement something (have a body of a method in an Interface).");
+    }
+}
+
+
 //////////////
 // GENERICS //
 //////////////
 
-// Added to Java5
 
-// class
-class ClassWithGenerics<T extends Comparable>{
+// Generics enable types (classes and interfaces) to be parameters when defining classes, interfaces and methods.
+// Added to Java5
+// Benefits include code reuse, type safety, elimination of casts, and ability for generic algorithms.
+
+
+interface InterfaceGenericClass<T>{
+}
+
+abstract class AbstractGenericClass<T>{
+
+}
+
+// Can have multiple types:
+class ClassWithGenerics<T extends Comparable, U>{
 
     T val;
 
@@ -1275,26 +1314,30 @@ class ClassWithGenerics<T extends Comparable>{
         this.val = val;
     }
 
-    // NOTE: If you have a static class, you must put the type in angle brackets behind the static keyword.
-    // Example:  public static<T extends Comparable> void mergeSort(T[] arr){ ... }
+    // Static generic method:
+    // Static keyword must have matching Generic type if generic type used anywhere in method.
+    // Static generic methods can be used in non-generic classes.
+    public static<T extends Object> void staticMethod(T[] arr){
+        System.out.println("I'm staticMethod in ClassWithGenerics...");
+    }
 
     public T getVal(){
         return val;
     }
 
     public void usingRawAndGenerics() {
-        // Raw type, have to typecast when reference, so prone to run time errors.
+        // List using raw types:.
         ArrayList rawTypesList = new ArrayList();
         rawTypesList.add(1);
         rawTypesList.add("hi");
         rawTypesList.add(1.2);
 
-        // Using Generics
+        // List using generics:
         ArrayList<Integer> intList = new ArrayList<>();
         intList.add(144);
     }
 
-    // How to print amy type of object in an ArrayList with <?>
+    // Must typecast when referencing; prone to run time errors.
     public static void printArrayList(ArrayList<?> aL){
         for(Object x : aL) System.out.println(x);
     }
