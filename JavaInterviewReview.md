@@ -12,6 +12,8 @@ String & Char Manipulation
 -[ ] Split  
                                         String str = "Hello Hello World!";  
                                         String splitStrs[] = str.split(" ");  
+                                        String spaces[] = myString.split("\\s+");  
+                                        String lines[] = myString.split("[\\r\\n]+");  
 -[ ] Trim/Strip  
                                         String s = "    M a tthew \t  \n Pettersson    \n";  
                                         String s1 = s.trim();  // ONLY removes whitespace before & after (NOT in between).  
@@ -77,7 +79,9 @@ Array Manipulation
 -[ ] Make Array  
                                         int[] myIntArray1 = new int[3];  
                                         int[] myIntArray2 = {1, 2, 3};  
-                                        int[] myIntArray3 = new int[]{1, 2, 3};  
+                                        int[] myIntArray3 = new int[]{1, 2, 3};
+                                        int[][] arr = {{1, 1}, {1, 2}, {2, 2}, {4, 3}};
+                                        Arrays.deepToString(arr); // How to print a nested object.
                                         String[] myStringArray1 = new String[3];  
                                         String[] myStringArray2 = {"a", "b", "c"};  
                                         String[] myStringArray3 = new String[]{"a", "b", "c"};  
@@ -926,6 +930,60 @@ Miscellaneous Java
                                         This helps to observe/manipulate runtime behavior, debug or test programs, and 
                                         to call methods by name (when you don't know them in advance).  
   
-
+Testing & JUnit 
+---------------
+-[ ] JUnit 4 vs JUnit 5  
+                                        JUnit 4   
+                                            - JDK 5 or later.  
+                                            - Single jar (different architecture).  
+                                            - Different Annotations.  
+                                            - Different Assertions Argument Orders.  
+                                        JUnit 5  
+                                            - JDK 8 or later.  
+                                            - Three sub-projects:  
+                                                - JUnit Platform,   
+                                                - JUnit Jupiter,   
+                                                - JUnit Vintage.   
+                                            - Different Annotations.   
+                                            - Different Assertions Argument Orders.  
+-[ ] Annotations  
+                                        JUnit 4                  JUnit 5  
+                                        @Test                    @Test               
+                                        @RunsWith                @RunsWith  
+                                        @Before          -->     @BeforeEach  
+                                        @BeforeClass     -->     @BeforeAll  
+                                        @After           -->     @AfterEach  
+                                        @AfterClass      -->     @AfterAll  
+                                        @Ignore          -->     @Disable  
+                                        @Category        -->     @Tag  
+                                        N/A              -->     @Nested            
+                                        N/A              -->     @TestFactory       
+                                        N/A              -->     @ExtendWith         
+                                        N/A              -->     @SelectPackages  
+                                        N/A              -->     @SelectClasses  
+                                        N/A              -->     @DisplayName()       
+                                        N/A              -->     @RepeatedTest()      
+                                        N/A              -->     @TestInstance  
+-[ ] Assertions  
+                                        JUnit uses assertions to assert conditions in tests.   
+                                        Common assertions include:  
+                                            - assertEquals()    
+                                            - assertNotEquals()  
+                                            - assertSame()      
+                                            - assertNotSame()  
+                                            - assertFalse()   
+                                            - assertTrue()  
+                                            - assertThrows()  
+                                            - assertArrayEquals()  
+                                            - assertIterableEquals()  
+                                            - assertLinesMatch()  
+                                            - assertTimeout()  
+                                            - assertTimeoutPreemptively()  
+                                            - assertAll()  
+-[ ] Assumptions  
+                                        Assumptions (or a boolean value), can be supplied to some assertions and dictate 
+                                        if that assertion is executed (true) or not executed (false).  
+                                        
+                                        
 
 
