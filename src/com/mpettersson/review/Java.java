@@ -1,10 +1,14 @@
 package com.mpettersson.review;
 
 
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
-import javax.swing.*;
 import java.io.*;
+import java.net.InetAddress;
 import java.nio.file.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
@@ -13,6 +17,8 @@ import java.util.function.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class Java {
@@ -133,41 +139,49 @@ public class Java {
         // BOOLEAN - No defined size
         boolean myBoolean = true;
 
-        // Display common numeric types.
-        System.out.println(Byte.TYPE);
-        System.out.println(Byte.SIZE);
-        System.out.println(Byte.MIN_VALUE);
-        System.out.println(Byte.MAX_VALUE);
+        // boolean from string:
+        boolean trueFlag = Boolean.valueOf("true");
+        boolean falseFlag = Boolean.valueOf("false");
 
-        System.out.println(Short.TYPE);
-        System.out.println(Short.SIZE);
-        System.out.println(Short.MIN_VALUE);
-        System.out.println(Short.MAX_VALUE);
 
-        System.out.println(Character.TYPE);
-        System.out.println(Character.SIZE);
-        System.out.println((int) Character.MIN_VALUE);
-        System.out.println((int) Character.MAX_VALUE);
+        // Primitive Type Values:
+        System.out.println("Byte.TYPE: "        + Byte.TYPE);
+        System.out.println("Byte.SIZE: "        + Byte.SIZE);
+        System.out.println("Byte.MIN_VALUE: "   + Byte.MIN_VALUE);
+        System.out.println("Byte.MAX_VALUE: "   + Byte.MAX_VALUE);
 
-        System.out.println(Integer.TYPE);
-        System.out.println(Integer.SIZE);
-        System.out.println(Integer.MIN_VALUE);
-        System.out.println(Integer.MAX_VALUE);
+        System.out.println("Short.TYPE: "       + Short.TYPE);
+        System.out.println("Short.SIZE: "       + Short.SIZE);
+        System.out.println("Short.MIN_VALUE: "  + Short.MIN_VALUE);
+        System.out.println("Short.MAX_VALUE: "  + Short.MAX_VALUE);
 
-        System.out.println(Float.TYPE);
-        System.out.println(Float.SIZE);
-        System.out.println(Float.MIN_VALUE);
-        System.out.println(Float.MAX_VALUE);
+        System.out.println("Integer.TYPE: "     + Integer.TYPE);
+        System.out.println("Integer.SIZE: "     + Integer.SIZE);
+        System.out.println("Integer.MIN_VALUE: "+ Integer.MIN_VALUE);
+        System.out.println("Integer.MAX_VALUE: "+ Integer.MAX_VALUE);
 
-        System.out.println(Double.TYPE);
-        System.out.println(Double.SIZE);
-        System.out.println(Double.MIN_VALUE);
-        System.out.println(Double.MAX_VALUE);
+        System.out.println("Long.TYPE: "        + Long.TYPE);
+        System.out.println("Long.SIZE: "        + Long.SIZE);
+        System.out.println("Long.MIN_VALUE: "   + Long.MIN_VALUE);
+        System.out.println("Long.MAX_VALUE: "   + Long.MAX_VALUE);
 
-        System.out.println(Long.TYPE);
-        System.out.println(Long.SIZE);
-        System.out.println(Long.MIN_VALUE);
-        System.out.println(Long.MAX_VALUE);
+        System.out.println("Float.TYPE: "       + Float.TYPE);
+        System.out.println("Float.SIZE: "       + Float.SIZE);
+        System.out.println("Float.MIN_VALUE: "  + Float.MIN_VALUE);
+        System.out.println("Float.MAX_VALUE: "  + Float.MAX_VALUE);
+
+        System.out.println("Double.TYPE: "      + Double.TYPE);
+        System.out.println("Double.SIZE: "      + Double.SIZE);
+        System.out.println("Double.MIN_VALUE: " + Double.MIN_VALUE);
+        System.out.println("Double.MAX_VALUE: " + Double.MAX_VALUE);
+
+        System.out.println("Boolean.TYPE: "     + Boolean.TYPE);
+
+        System.out.println("Character.TYPE: "               + Character.TYPE);
+        System.out.println("Character.SIZE: "               + Character.SIZE);
+        System.out.println("(int) Character.MIN_VALUE): "   + (int) Character.MIN_VALUE);
+        System.out.println("(int) Character.MAX_VALUE): "   + (int) Character.MAX_VALUE);
+
 
         // Common Math Functions
         int x = 10, y = 100;
@@ -236,6 +250,7 @@ public class Java {
         String myString = "This is my string!";
         String strHello = "Hello";
         String strWorld = "World";
+        String eol = System.lineSeparator();
 
         // Concat with
         System.out.println(strHello + strWorld);        // This will automatically convert to string
@@ -358,6 +373,11 @@ public class Java {
         // Splits our string to two substrings at most, completely ignoring all other occurrences of "."
         System.out.println(Arrays.toString("apples.oranges.pears.pineapples".split(Pattern.quote("."), 2)));
 
+        // Split strings at new lines:
+        String lines[] = myString.split("[\\r\\n]+");
+
+        // Split strings at spaces:
+        String spaces[] = myString.split("\\s+");
 
         // examples of String.join()
         String arrayOfStrings[] = {"1","2","3","4","5"};
@@ -405,6 +425,8 @@ public class Java {
         System.out.println(strBuilder.delete(15, 21));
         // Insert:
         System.out.println(strBuilder.insert(30, "String To Insert"));
+        // Reverse:
+        System.out.println(strBuilder.reverse());
         // Print:
         System.out.println(strBuilder);
         // Use this to assign to a string
@@ -537,25 +559,25 @@ public class Java {
         // ARRAYS //
         ////////////
 
-        //For primitive types:
+        System.out.println("\nArrays Examples");
 
+        // PRIMITIVE ARRAYS:
         int[] myIntArray1 = new int[3];
         int[] myIntArray2 = {1, 2, 3};
         int[] myIntArray3 = new int[]{1, 2, 3};
 
-        //For classes, for example String, it's the same:
+        // CLASS/STRING ARRAYS:
         String[] myStringArray1 = new String[3];
         String[] myStringArray2 = {"a", "b", "c"};
         String[] myStringArray3 = new String[]{"a", "b", "c"};
 
 
-        //The third way of initializing is useful when you declare the array first and then initialize it. The cast is necessary here.
+        //Declare and Initialize in separate statements:
         String[] myStringArray4;
-        myStringArray4 = new String[]{"a", "b", "c"};
+        myStringArray4 = new String[]{"a", "b", "c"};  // The cast is necessary.
 
         // Multidimentional
         int[][] multiDimArray = {{1,2}, {1,2}, {1,2}, {1,2}, {1,2}};
-
 
         // How to copy arrays:
         // NOTE: Anything other than primitive data types will have shallow copies.
@@ -568,7 +590,7 @@ public class Java {
         Arrays.sort(a3);
 
         // How to print an Array:
-        System.out.println(Arrays.toString(a3));
+        System.out.println("Arrays.toString(a3): " + Arrays.toString(a3));
 
 
         ////////////////////////////
@@ -642,139 +664,394 @@ public class Java {
         // set(E e) methods act on the last element returned by next()/previous().
 
 
-        ///////////////
-        // ARRAYLIST //
-        ///////////////
+        ///////////////////
+        // VECTOR (LIST) //
+        ///////////////////
+        // IS Synchronized
+
+        System.out.println("\nVector Example");
 
         // NOTE: You have to use Uppercase Integer here BC it needs classes not primitives.
-        ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1,2,3,4));
+        Vector<Integer> vector = new Vector<>();
 
-        // Then autoboxing will be used to get the contents.
-        arrayList.add(Integer.valueOf(1));
-        arrayList.add(1);  // Same as above BC autoboxing
-        System.out.println(arrayList.get(0).intValue());
-        System.out.println(arrayList.get(0));   // Same as above BC autoboxing
+        vector.add(0);                          // Add 0 (at END) -- Autoboxing will auto-convert int to Integer
+        vector.add(Integer.valueOf(1));         // Add 1 (at END) -- So don't have to do Integer.valueOf()...
+        vector.add(2);                          // Add 1 (at END)
+        vector.add(2, 99);       // Add 99 at index 2
+        vector.add(0, -0);       // Add -0 at index 0
+        vector.addAll(Arrays.asList(5,6,7,8));  // Add all elements of a collection.
+        vector.set(2, 22);                      // Set value at index 2 to 22
+        vector.get(2);                          // Return value at index 2 -- Autoboxing will convert Integer to int.
+        vector.get(0).intValue();               // Return value at index 0 -- So don't need to use intValue().
+
+        for(Integer i: vector){/* do stuff */}          // Iterate Via Enhanced For Loop
+
+        Iterator vectorIt = vector.iterator();          // Iterate Via ITERATOR
+        while (vectorIt.hasNext()){vectorIt.next();}    // And hasNext() method.
+
+        Object[] vectorObjArray = vector.toArray();     // How to convert a Vector to an Object Array:
+
+        System.out.println("vector.toString(): "        + vector.toString());
+        System.out.println("vector.get(2): "            + vector.get(2));
+        System.out.println("vector.indexOf(0): "        + vector.indexOf(0));
+        System.out.println("vector.lastIndexOf(0): "    + vector.lastIndexOf(0));
+        System.out.println("vector.lastElement(): "     + vector.lastElement());
+        System.out.println("vector.isEmpty(): "         + vector.isEmpty());
+        System.out.println("vector.contains(2): "       + vector.contains(2));
+        System.out.println("vector.capacity(): "        + vector.capacity());
+        System.out.println("vector.size(): "            + vector.size());
+
+        vector.remove(0);                 // Remove and return item in index 0
+        vector.remove((Object) 2);              // Remove object matching 2 (no exception if no match).
+        vector.clear();
 
 
-        // Iterate with an Enhaned For
-        for(Integer i: arrayList){
-            System.out.print(i);
-        }
+        //////////////////
+        // STACK (LIST) //
+        //////////////////
+        // Extends Vector.
 
-        // Iterate Using an ITERATOR
-        Iterator it = arrayList.iterator();
-        while (it.hasNext()){
-            System.out.println(it.next());
-        }
+        System.out.println("\nStack Example");
 
-        // Size
-        System.out.println("Size: " + arrayList.size());
-        // Overwrite at an index:
-        arrayList.set(0, 0);
-        // Remove at an index
-        arrayList.remove(0);
-        // Contains
-        System.out.println(arrayList.contains(4));
-        // Clear everything
+        Stack<Integer> stack = new Stack<>();
+
+        stack.push(0);                            // Push 0 on stack (or end if viewed as list).
+        for(int i = 1; i < 5; i++) { stack.push(i); }
+        stack.add(99);                                  // Add 99 to top of stack (or end if viewed as list).
+        stack.addAll(Arrays.asList(5,6,7,8));           // Add all of a collection to stack.
+        stack.set(2, 22);                               // Set value at index 2 to 22
+        stack.get(2);                                   // Return value at index 2
+
+        for(Integer i: stack){/* do stuff */}           // Iterate Via Enhanced For Loop
+
+        Iterator stackIt = stack.iterator();            // Iterate Via ITERATOR
+        while (stackIt.hasNext()){stackIt.next();}      // And hasNext() method.
+
+        Object[] stackObjArray = stack.toArray();       // How to convert to an Object Array:
+
+        System.out.println("stack.get(2): "     + stack.toString());
+        System.out.println("stack.get(2): "     + stack.get(2));
+        System.out.println("stack.size(): "     + stack.size());
+        System.out.println("stack.search(2): "  + stack.search(2));
+        System.out.println("stack.peek(): "     + stack.peek());
+        System.out.println("stack.empty(): "    + stack.empty());
+        System.out.println("stack.pop(): "      + stack.pop());
+
+        stack.pop();
+        stack.remove(0);                          // Remove and return item in index 0
+        stack.remove((Object) 2);                       // Remove object matching 2 (no exception if no match).
+        stack.clear();
+
+
+        //////////////////////
+        // ARRAYLIST (LIST) //
+        //////////////////////
+
+        System.out.println("\nArrayList Example");
+
+        ArrayList<Integer> arrayList = new ArrayList<>();
+
+        arrayList.add(0);                           // Add 0 (at tail)
+        arrayList.add(Integer.valueOf(1));          // Add 1 (at tail)
+        arrayList.add(2);                           // Add 1 (at tail)
+        arrayList.add(2, 99);        // Add 99 at index 2
+        arrayList.add(0, -0);        // Add -0 at index 0
+        arrayList.addAll(Arrays.asList(5,6,7,8));   // Add all of a collection.
+        arrayList.set(2, 22);                       // Set value at index 2 to 22
+        arrayList.get(2);                           // Return value at index 2
+        arrayList.get(0).intValue();                // Return value at index 0
+
+        for(Integer i: arrayList){/* do stuff */}           // Iterate Via Enhanced For Loop
+
+        Iterator arrayListIt = arrayList.iterator();        // Iterate Via ITERATOR
+        while (arrayListIt.hasNext()){arrayListIt.next();}  // And hasNext() method.
+
+        Object[] arrayListObjArray = arrayList.toArray();   // How to convert to an Object Array:
+
+        System.out.println("arrayList.toString(): "     + arrayList.toString());
+        System.out.println("arrayList.get(2): "         + arrayList.get(2));
+        System.out.println("arrayList.indexOf(0): "     + arrayList.indexOf(0));
+        System.out.println("arrayList.lastIndexOf(0): " + arrayList.lastIndexOf(0));
+        System.out.println("arrayList.isEmpty(): "      + arrayList.isEmpty());
+        System.out.println("arrayList.contains(2): "    + arrayList.contains(2));
+        System.out.println("arrayList.size(): "         + arrayList.size());
+
+        arrayList.remove(0);                 // Remove and return item in index 0
+        arrayList.remove((Object) 2);              // Remove object matching 2 (no exception if no match).
         arrayList.clear();
-        // isEmpty
-        System.out.println(arrayList.isEmpty());
 
 
-        ArrayList<String> arrayListExample = new ArrayList<>();
-        arrayListExample.add("some string");
-        for(int i = 0; i < arrayListExample.size(); i++){
-            System.out.println(arrayListExample.get(i));
-        }
+        ///////////////////////////////
+        // LINKEDLIST (LIST & QUEUE) //
+        ///////////////////////////////
 
-        boolean arrayListContainsExample = arrayListExample.contains("some string");
-        int arrayListIndexOfExample = arrayListExample.indexOf("some string");
+        System.out.println("\nLinkedList Example");
 
+        LinkedList<Integer> linkedList = new LinkedList<>();
 
+        linkedList.add(0);                          // Add 0 (at tail)
+        linkedList.add(Integer.valueOf(1));         // Add 1 (at tail)
+        linkedList.add(2);                          // Add 1 (at tail)
+        linkedList.add(2, 99);       // Add 99 at index 2
+        linkedList.add(0, -0);       // Add -0 at index 0
+        linkedList.addFirst(0);                  // Add 0 to head of linkedList
+        linkedList.addLast(99);                  // Add 99 to tail of linkedList
+        linkedList.addAll(Arrays.asList(5,6,7,8));  // Add all of a collection to stack.
+        linkedList.set(2, 22);                      // Set value at index 2 to 22
+        linkedList.get(2);                          // Return value at index 2.
+        linkedList.get(0).intValue();               // Return value at index 0.
+        linkedList.getFirst();                      // Return value at index 0.
+        linkedList.getLast();                       // Return value at last index.
 
-        ////////////////
-        // LINKEDLIST //
-        ////////////////
+        for(Integer i: linkedList){/* do stuff */}              // Iterate Via Enhanced For Loop
 
+        Iterator linkedListIt = linkedList.iterator();          // Iterate Via ITERATOR
+        while (linkedListIt.hasNext()){linkedListIt.next();}    // And hasNext() method.
 
-        // LINKED LIST
-        LinkedList<Integer> iL1 = new LinkedList<>();
+        Object[] linkedListObjArray = linkedList.toArray();     // How to convert to an Object Array:
 
-        // Add to Linked List
-        iL1.add(1);
-        iL1.add(2);
-        iL1.add(3);
+        System.out.println("linkedList.toString(): "        + linkedList.toString());
+        System.out.println("linkedList.get(2): "            + linkedList.get(2));
+        System.out.println("linkedList.getFirst(): "        + linkedList.getFirst());
+        System.out.println("linkedList.getLast(): "         + linkedList.getLast());
+        System.out.println("linkedList.indexOf(0): "        + linkedList.indexOf(0));
+        System.out.println("linkedList.lastIndexOf(0): "    + linkedList.lastIndexOf(0));
+        System.out.println("linkedList.isEmpty(): "         + linkedList.isEmpty());
+        System.out.println("linkedList.contains(2): "       + linkedList.contains(2));
+        System.out.println("linkedList.size(): "            + linkedList.size());
 
-
-        // Add a list of things to a Linked List:
-        iL1.addAll(Arrays.asList(5,6,7,8));
-
-        // Add to the beginning of a Linked List:
-        iL1.addFirst(0);
-
-        // Add to the end of a Linked List:
-        iL1.addLast(99);
-
-        // Replace index
-        iL1.set(0, 42);
-
-        // TestClass if the Linked List contains a value:
-        boolean result = iL1.contains(4);
-        System.out.println(result);
-
-        // Get the index of a value in a Linked List:
-        int index = iL1.indexOf(4);
-        System.out.println(index);
-
-        // How to get items from a Linked List:
-        iL1.get(0);
-        iL1.getFirst();
-        iL1.getLast();
-
-        // How to remove items from a linked list:
-//        iL1.remove(0);
-//        iL1.removeFirst();
-//        iL1.removeFirstOccurrence(0);
-//        iL1.removeLast();
-//        iL1.removeLastOccurrence(0);
-
-        // How to get the size of a linked list:
-        System.out.println(
-                iL1.size()
-        );
-
-        // How to convert a Linked List to an Array:
-        Object[] llObj = iL1.toArray();
-
-        for(Integer i: iL1){
-            System.out.print(i);
-        }
-        System.out.println();
+        linkedList.remove(0);                 // Remove and return item in index 0
+        linkedList.remove((Object) 2);              // Remove object matching 2 (no exception if no match).
+        linkedList.removeFirst();
+        linkedList.removeFirstOccurrence(0);
+        linkedList.removeLast();
+        linkedList.removeLastOccurrence(0);
+        linkedList.clear();
 
 
-        LinkedList<String> linkedListExample = new LinkedList<String>();
-        linkedListExample.add("Hello");
-        linkedListExample.add("World");
-        linkedListExample.add("That");
-        linkedListExample.add("Is");
-        linkedListExample.add("All");
-        linkedListExample.add(1, "What?");
+        //////////////////////////
+        // ARRAYDEQUEUE (QUEUE) //
+        //////////////////////////
 
-        Iterator<String> strIter = linkedListExample.iterator();
+        // Poll/Element/Offer   are the same as
+        // Remove/Peek/Add      except Remove/Peek throw Exceptions if there is no object.
 
-        while(strIter.hasNext()){
-            System.out.println(strIter.next());
-        }
+        System.out.println("\nArrayDeque Example");
+
+        ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
+
+        arrayDeque.push(0);                      // Push 0 to head
+        arrayDeque.add(0);                          // Add 0 (to tail)
+        arrayDeque.add(2);                          // Add 1 (to tail)
+        arrayDeque.addFirst(0);                  // Add 0 to head
+        arrayDeque.addLast(99);                  // Add 99 to tail
+        arrayDeque.addAll(Arrays.asList(5,6,7,8));  // Add all of a collection.
+        arrayDeque.offer(99);                    // Add 99 to end.
+        arrayDeque.offerFirst(-0);               // Add -0 at head
+        arrayDeque.offerLast(-9);                // Add -0 at tail
+        arrayDeque.getFirst();                      // Return value at index 0.
+        arrayDeque.getLast();                       // Return value at last index.
+        arrayDeque.peek();                          // Return (but doesn't remove) head.
+        arrayDeque.element();                       // Return (but doesn't remove) head.
+
+        for(Integer i: arrayDeque){/* do stuff */}                  // Iterate Via Enhanced For Loop
+
+        Iterator arrayDequeueIt = arrayDeque.iterator();            // Iterate Via ITERATOR
+        while (arrayDequeueIt.hasNext()){arrayDequeueIt.next();}    // And hasNext() method.
+
+        Object[] ArrayDequeueObjArray = arrayDeque.toArray();       // How to convert to an Object Array:
+
+        System.out.println("arrayDeque.toString(): "        + arrayDeque.toString());
+        System.out.println("arrayDeque.peek(): "            + arrayDeque.peek());
+        System.out.println("arrayDeque.element(): "         + arrayDeque.element());
+        System.out.println("arrayDeque.getFirst(): "        + arrayDeque.getFirst());
+        System.out.println("arrayDeque.getLast(): "         + arrayDeque.getLast());
+        System.out.println("arrayDeque.lastIndexOf(0): "    + arrayDeque.pollFirst());
+        System.out.println("arrayDeque.isEmpty(): "         + arrayDeque.isEmpty());
+        System.out.println("arrayDeque.contains(2): "       + arrayDeque.contains(2));
+        System.out.println("arrayDeque.size(): "            + arrayDeque.size());
+
+        arrayDeque.pop();
+        arrayDeque.remove(0);                   // Remove and return item in index 0
+        arrayDeque.remove((Object) 2);             // Remove object matching 2 (no exception if no match).
+        arrayDeque.removeFirst();
+        arrayDeque.removeFirstOccurrence(0);
+        arrayDeque.removeLast();
+        arrayDeque.removeLastOccurrence(0);
+        arrayDeque.clear();
+
+
+        ///////////////////////////
+        // PRIORITYQUEUE (QUEUE) //
+        ///////////////////////////
+
+        // null values are NOT allowed.
+        // Objects must be comparable.
+        // Head of the queue is has lowest priority.
+        //
+        // PriorityQueue Constructor Options:
+        //    PriorityQueue()                       Uses default initial capacity (11) and natural ordering.
+        //    PriorityQueue(Collection<E> c)        Creates PriorityQueue with elements in the specified collection.
+        //    PriorityQueue(int initialCapacity)    Uses specified initial capacity and natural ordering.
+        //    PriorityQueue(int i, Comparator<E> c) Uses specified init capacity (i) and uses comparator (c) for order.
+        //    PriorityQueue(PriorityQueue<E> c)     Creates a PriorityQueue with ele in the specified priority queue.
+        //    PriorityQueue(SortedSet<E> c)         Creates a PriorityQueue with elements in the specified sorted set.
+        //
+        // Poll/Element/Offer   are the same as
+        // Remove/Peek/Add      except Remove/Peek throw Exceptions if there is no object.
+
+        System.out.println("\nPriorityQueue Example");
+
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
+
+        priorityQueue.add(2);                           // Add 0 (at END) -- Autoboxing will auto-convert int to Integer
+        priorityQueue.add(Integer.valueOf(98));         // Add 1 (at END) -- So don't have to do Integer.valueOf()...
+        priorityQueue.add(1);                           // Add 1 (at END)
+        priorityQueue.addAll(Arrays.asList(56,8,7));    // Add all of a collection.
+        priorityQueue.offer(0);                      // Add 99
+        priorityQueue.peek();                           // Returns (doesn't remove) head element (or ele at zero index)
+        priorityQueue.element();
+
+        for(Integer i: priorityQueue){/* do stuff */}               // Iterate Via Enhanced For Loop
+
+        Iterator priorityQueueIt = priorityQueue.iterator();        // Iterate Via ITERATOR
+        while (priorityQueueIt.hasNext()){priorityQueueIt.next();}  // And hasNext() method.
+
+        Object[] priorityQueueObjArray = priorityQueue.toArray();   // How to convert to an Object Array:
+
+        System.out.println("priorityQueue.toString(): "        + priorityQueue.toString());
+        System.out.println("priorityQueue.peek(): "            + priorityQueue.peek());
+        System.out.println("priorityQueue.isEmpty(): "         + priorityQueue.isEmpty());
+        System.out.println("priorityQueue.contains(2): "       + priorityQueue.contains(2));
+        System.out.println("priorityQueue.size(): "            + priorityQueue.size());
+
+        priorityQueue.poll();                            // Remove and return the lowest value element.
+        priorityQueue.remove((Object) 51);               // Remove object matching 2 (no exception if no match).
+        priorityQueue.clear();
+
+
+        ///////////////////
+        // HASHSET (SET) //
+        ///////////////////
+
+        // Uses HashMap.
+        // NO Order.
+
+        System.out.println("\nHashSet Example");
+
+        HashSet<Integer> hashSet = new HashSet<>();
+
+        hashSet.add(1);                           // Add 1
+        hashSet.add(1);                           // Doesn't do anything; already there.
+        hashSet.addAll(Arrays.asList(56,8,7));    // Add all of a collection.
+
+        for(Integer i: hashSet){/* do stuff */}               // Iterate Via Enhanced For Loop
+
+        Iterator hashSetIt = hashSet.iterator();        // Iterate Via ITERATOR
+        while (hashSetIt.hasNext()){hashSetIt.next();}  // And hasNext() method.
+
+        Object[] hashSetObjArray = hashSet.toArray();   // How to convert to an Object Array:
+
+        System.out.println("hashSet.toString(): "        + hashSet.toString());
+        System.out.println("hashSet.isEmpty(): "         + hashSet.isEmpty());
+        System.out.println("hashSet.contains(2): "       + hashSet.contains(2));
+        System.out.println("hashSet.size(): "            + hashSet.size());
+
+        hashSet.remove((Object) 51);               // Remove object matching 2 (no exception if no match).
+        hashSet.clear();
 
 
         /////////////////////////
-        // HASHMAP & HASHTABLE //
+        // LINKEDHASHSET (SET) //
         /////////////////////////
+
+        // Uses HashMap & LinkedList.
+        // IS ORDERED.
+
+        System.out.println("\nLinkedHashSet Example");
+
+        LinkedHashSet<Integer> linkedHashSet = new LinkedHashSet<>();
+
+        linkedHashSet.add(1);                           // Add 1 (at tail).
+        linkedHashSet.add(1);                           // Doesn't do anything; already there.
+        linkedHashSet.addAll(Arrays.asList(56,8,7));    // Add all of a collection.
+
+        for(Integer i: linkedHashSet){/* do stuff */}               // Iterate Via Enhanced For Loop
+
+        Iterator linkedHashSetIt = linkedHashSet.iterator();        // Iterate Via ITERATOR
+        while (linkedHashSetIt.hasNext()){linkedHashSetIt.next();}  // And hasNext() method.
+
+        Object[] linkedHashSetObjArray = linkedHashSet.toArray();   // How to convert to an Object Array:
+
+        System.out.println("linkedHashSet.toString(): "        + linkedHashSet.toString());
+        System.out.println("linkedHashSet.isEmpty(): "         + linkedHashSet.isEmpty());
+        System.out.println("linkedHashSet.contains(2): "       + linkedHashSet.contains(2));
+        System.out.println("linkedHashSet.size(): "            + linkedHashSet.size());
+
+        linkedHashSet.remove((Object) 51);               // Remove object matching 2 (no exception if no match).
+        linkedHashSet.remove(999);                    // Removing nonexistent item is OK.
+        linkedHashSet.clear();
+
+
+        ///////////////////
+        // TREESET (SET) //
+        ///////////////////
+
+        // IS ORDERED
+        // Implemented as self balancing binary tree (Red Black Tree).
+        // Elements must be homogeneous and comparable.
+
+        System.out.println("\nTreeSet Example");
+
+        TreeSet<Integer> treeSet = new TreeSet<>();
+
+        treeSet.add(1);                           // Add 1.
+        treeSet.add(1);                           // Doesn't do anything; already there.
+        treeSet.addAll(Arrays.asList(5,6,8,7,9)); // Add all of a collection.
+        treeSet.first();                          // Return first element (raises exception if none).
+        treeSet.last();                           // Return last element (raises exception if none).
+        treeSet.floor(10);                     // Returns highest valued element <= than supplied element (10).
+        treeSet.ceiling(10);                   // Returns lowest valued element >= than than supplied ele (10).
+        treeSet.lower(10);                     // Returns highest valued element < than than supplied ele (10) or null.
+        treeSet.higher(10);                    // Returns lowest valued element > than supplied element (10) or null.
+
+        for(Integer i: treeSet){/* do stuff */}         // Iterate Via Enhanced For Loop
+
+        Iterator treeSetIt = treeSet.iterator();        // Iterate Via ITERATOR
+        while (treeSetIt.hasNext()){treeSetIt.next();}  // And hasNext() method.
+
+        Object[] treeSetObjArray = treeSet.toArray();   // How to convert to an Object Array:
+
+        System.out.println("treeSet.toString(): "        + treeSet.toString());
+        System.out.println("treeSet.first(): "           + treeSet.first());
+        System.out.println("treeSet.last(): "            + treeSet.last());
+        System.out.println("treeSet.pollFirst(): "       + treeSet.pollFirst());
+        System.out.println("treeSet.pollLast(): "        + treeSet.pollLast());
+        System.out.println("treeSet.lower(10): "         + treeSet.lower(10));
+        System.out.println("treeSet.higher(10): "        + treeSet.higher(10));
+        System.out.println("treeSet.floor(10): "         + treeSet.floor(10));
+        System.out.println("treeSet.ceiling(10): "       + treeSet.ceiling(10));
+        System.out.println("treeSet.isEmpty(): "         + treeSet.isEmpty());
+        System.out.println("treeSet.contains(2): "       + treeSet.contains(2));
+        System.out.println("treeSet.size(): "            + treeSet.size());
+
+        treeSet.pollFirst();                      // Remove and Return first element.
+        treeSet.pollLast();                       // Remove and Return last element.
+        treeSet.remove((Object) 51);              // Remove object matching 2 (no exception if no match).
+        treeSet.remove(999);
+        treeSet.clear();
+
+
+        ///////////////////////////////
+        // HASHMAP & HASHTABLE (MAP) //
+        ///////////////////////////////
 
         // HashMap ISN'T thread safe and allows ONE null key value.
-        // Hashtable IS thread safe, just use synchronized blocks, but DOESNOT allow any null key values.
-        // Another threadsafe possiblitiy is Collections.synchronizedMap:
-        // Exmaple: Map<String, Integer> syncHashMap = Collections.synchronizedMap(new HashMap<>());
+        // Hashtable IS thread safe, just use synchronized blocks, but DOES NOT allow any null key values.
+        // Another threadsafe possibility is Collections.synchronizedMap:
+        // Example: Map<String, Integer> syncHashMap = Collections.synchronizedMap(new HashMap<>());
+
+        System.out.println("\nHashMap/Hashtable Example");
 
         Map<String, Integer> hash = new HashMap<>();
 
@@ -855,33 +1132,6 @@ public class Java {
         System.out.println();
 
 
-        ///////////
-        // STACK //
-        ///////////
-
-        Stack<Integer> stackVar = new Stack<>();
-
-        // PUSH a value onto the stack:
-        for(int i = 0; i < 5; i++) {
-            stackVar.push(i);
-        }
-
-        // SIZE of a stack:
-        System.out.println("Get the size of a stack with stackVar.size(): " + stackVar.size());
-
-        // POP a value off the stack:
-        System.out.println("Pop a value off a stack with stackVar.pop(): " + stackVar.pop());
-
-        // SEARCH a stack for a value:
-        System.out.println("Search a stack with stackVar.search(2): " + stackVar.search(2));
-
-        // PEEK at the next item on a stack (won't take it off/pop it)
-        System.out.println("Peek or Look at the next item on a stack with stackVar.peek(): " + stackVar.peek());
-
-        // Check if a stack is EMPTY
-        System.out.println("Check if a stack is empty with stackVar.empty(): " + stackVar.empty());
-
-
         /////////////////////////
         // EXCEPTIONS & ERRORS //
         /////////////////////////
@@ -898,6 +1148,8 @@ public class Java {
         // application.  RuntimeException and all of it's subclasses are "unchecked" exceptions, all other Exceptions
         // are "checked" exceptions, or are checked at compile time, and must be added to a classes/methods throw clause.
         // Examples include IOException, ArrayIndexOutOfBoundsException, NullPointerException, and ClassCastException.
+
+        System.out.println("\nExceptions Example");
 
         try{
             int badInt = 10/0;
@@ -933,6 +1185,8 @@ public class Java {
         ///////////
         // FILES //
         ///////////
+
+        System.out.println("\nFile IO Examples");
 
         // How to CREATE and RENAME a file:
         File f1 = new File("f1.log");
@@ -1575,6 +1829,10 @@ class LambdaReview {
     public static void examples(){
 
         // NOTE: Lambda Expressions can easily replace Anonymous Classes with single methods.
+        //       Lambda must return same type for all branches.
+
+        // Simple comparator using lambda:
+        Comparator<String> comp = (first, second) -> Integer.compare(first.length(), second.length());
 
         // How to start a runnable (thread) via Anonymous Class:
         new Thread(new Runnable() {
@@ -1722,7 +1980,9 @@ class ConcurrentReview {
     // value (as opposed to a cached value) and NOTHING about mutual exclusion (so multiple threads can still access the
     // field).  Therefore, use of the volatile keyword without synchronization CAN cause memory consistency errors.
     //
-    // HOWEVER, java.util.concurrent.atomic supports lock-free thread-safe programming on single varaibles.
+    // AtomicBoolean can be used in place of volatile.
+    //
+    // HOWEVER, java.util.concurrent.atomic supports lock-free thread-safe programming on single variables.
     static volatile boolean volatileFlag = true;
 
 
@@ -2354,5 +2614,212 @@ class GCReview {
         Runtime.getRuntime().gc();  // - Instance method, native method, in java.lang.Runtime.
     }
 }
+
+
+
+///////////
+// JUNIT //
+///////////
+//
+// JUnit is a unit testing framework for the Java programming language. JUnit has been important in the development of
+// test-driven development, and is one of a family of unit testing frameworks which is collectively known as xUnit that
+// originated with SUnit.
+//
+// SOME of the differences between JUnit 4 and JUnit 5, aside from the change in architecture from one Jar three
+// sub-projects (JUnit Platform, JUnit Jupiter, JUnit Vintage), are listed below:
+//       JUnit 4                  JUnit 5
+//       -------                  -------
+//       JDK 5            -->     JDK 8               Minimum JDK
+//       @Test                    @Test               Marks a test method in a class; will be executed/reported.
+//       @RunsWith                @RunsWith
+//       @Before          -->     @BeforeEach
+//       @BeforeClass     -->     @BeforeAll
+//       @After           -->     @AfterEach
+//       @AfterClass      -->     @AfterAll
+//       @Ignore          -->     @Disable
+//       @Category        -->     @Tag
+//       @Suite           -->     N/A
+//       @Rule            -->     N/A
+//       N/A              -->     @Nested             Nested tests.
+//       N/A              -->     @TestFactory        Creates test cases at runtime; for rand/external data tests.
+//       N/A              -->     @ExtendWith         Register custom extensions.
+//       N/A              -->     @SelectPackages
+//       N/A              -->     @SelectClasses
+//       N/A              -->     @DisplayName()      Changes the displayed name of the testing method.
+//       N/A              -->     @RepeatedTest()     Repeat the test a number of times.
+//       N/A              -->     @TestInstance
+//
+// JUnit uses assertions to assert conditions in tests; common assertions include:
+//      assertEquals()  and assertNotEquals()
+//      assertSame()    and assertNotSame()
+//      assertFalse()   and assertTrue()
+//      assertThrows()
+//      assertArrayEquals()
+//      assertIterableEquals()
+//      assertLinesMatch()
+//      assertTimeout()
+//      assertTimeoutPreemptively()
+//      assertAll()
+//
+// Assumptions (or a boolean value), can be supplied to some assertions and dictate if that assertion is executed (true)
+// or not executed (false).
+
+// The Class TO TEST:
+class StringUtils {
+    public static Double toDouble(String str) {
+        if (str == null) { return null; }
+        return Double.valueOf(str);
+    }
+
+    public static boolean empty(String str) {
+        return str == null || str.trim().length() == 0;
+    }
+
+    public static String concat(String... strs) {
+        String concatString = null;
+        if (strs != null && strs.length > 0) {
+            StringBuilder sb = new StringBuilder();
+            for (String st : strs) {
+                if (st != null) {
+                    sb.append(st);
+                }
+            }
+            concatString = sb.toString();
+        }
+        return concatString;
+    }
+}
+
+// An EXAMPLE of a matching JUnit test class:
+// NOTE: Test classes should be PUBLIC (in their own file), and are usually in a separate test directory from the src
+// directory (i.e., project/test/java/com/...).
+class StringUtilsTest{
+    @BeforeAll
+    public static void setup() {
+        System.out.println("@BeforeAll annotated methods must be static void, and are good for connecting to servers.");
+    }
+
+    @BeforeEach
+    public void before() {
+        System.out.println("@BeforeEach is useful for executing common code before tests.");
+    }
+
+    @Test
+    public void toDouble() {
+        // Valid string test.
+        String validValue = "1969";
+        final Double validExpVal = Double.valueOf(validValue);
+        final Double validActual = StringUtils.toDouble(validValue);
+
+        assertAll("Multiple Assertions.", () -> {
+            assertNotNull(validActual);
+            assertEquals(validExpVal, validActual);
+        });
+
+        // Test null string.
+        final String nullString = null;
+        final Double nullStringActual = StringUtils.toDouble(nullString);
+        assertNull(nullStringActual, "The actual is not null");
+
+        // Test non-numeric string.
+        final String naString = "N/A";
+        assertThrows(NumberFormatException.class, () -> { StringUtils.toDouble(naString); });
+
+    }
+
+    @DisplayName("Repeated Test")
+    @RepeatedTest(value = 5, name = "{displayName} -> {currentRepetition} of {totalRepetitions}")
+    public void empty() {
+        // Test the case that the input is NULL
+        String input = null;
+        assertTrue(StringUtils.empty(input));
+
+        // Test white space.
+        input = " ";
+        assertTrue(StringUtils.empty(input));
+
+        // Test case with the input is not empty
+        input = "not empty...";
+        assertFalse(StringUtils.empty(input));
+    }
+
+    @Test
+    public void concat() {
+        // Test with three strings.
+        String st1 = "Hello", st2 = "World", st3 = "!";
+        String expect = st1 + st2 + st3;
+        String actual = StringUtils.concat(st1, st2, st3);
+        assertEquals(expect, actual);
+
+        // Test with null.
+        st3 = null;
+        assertEquals(st1 + st2, StringUtils.concat(st1, st2, st3));
+    }
+
+    @Disabled
+    @Test
+    public void concatWithAllNullInputTest() {
+        assertNull(StringUtils.concat());
+    }
+
+    @AfterEach
+    public void after() {
+        System.out.println("@AfterEach will run after each test.");
+    }
+
+    @AfterAll
+    public static void tearDown() {
+        System.out.println("@AfterAll annotated methods must be static void, and are good for disconnecting from servers.");
+    }
+}
+
+
+////////////////////////
+// MISCELLANEOUS JAVA //
+////////////////////////
+
+class MiscellaneousJava{
+    public void snippets(){
+
+        // Show memory usage:
+        System.out.println("KB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024);
+
+        try {
+            InetAddress localHost = InetAddress.getLocalHost();
+
+            InetAddress inet = InetAddress.getByAddress(new byte[]{127, 0, 0, 1});
+            System.out.println(inet.isReachable(5000) ? "Host is reachable" : "Host is NOT reachable");
+
+            //  How to get the IP from a Hostname (cached):
+            InetAddress address = InetAddress.getByName("www.yahoo.com");
+            System.out.println(address.getHostAddress());
+
+            // How to get Hostname from IP:
+            InetAddress addr = InetAddress.getByName("192.168.0.1");
+        }catch(IOException e){
+            System.out.println("Caught exception:" + e.toString());
+        }
+
+        // Date and Time (one-liner):
+        String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime());
+
+        // Date and Time (multi-line) via Calendar:
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        System.out.println(dateFormat.format(cal.getTime()));
+
+        // Date and Time (multi-line) via Date:
+        DateFormat dateFormat0 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        System.out.println(dateFormat0.format(date));
+
+        // How to suppress warnings:
+        @SuppressWarnings({ "null", "unused" })
+        String nullString = null;
+    }
+}
+
+
+
 
 
