@@ -592,7 +592,8 @@ Data Structures
                                         Node Variable(s): key<K>, value<V>, next<Node>.  
 -[ ] Graph  
                                         SEE ./src/com/mpettersson/review/data/structures/Graph.java.  
-                                        NOTE: It's easier for interviews just to have a list of nodes (no Graph Class).  
+                                        NOTE: Because graphs might not be fully connected, a Node Class needs to be 
+                                        wrapped in a Graph Class.  
                                         Node Variable(s): name<String>, value<V>, neighbors<List<Node>>.   
                                         Node Method(s): addNeighbor(Node n), removeNeighbor(Node n), getNeighbors().  
 -[ ] Tree  

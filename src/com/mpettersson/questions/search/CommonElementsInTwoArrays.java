@@ -2,7 +2,6 @@ package com.mpettersson.questions.search;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 /**
  *     COMMON ELEMENTS IN TWO ARRAYS
